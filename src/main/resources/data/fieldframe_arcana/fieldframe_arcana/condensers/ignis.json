@@ -1,0 +1,6 @@
+{
+  "aspect": "thaumaturge:ignis",
+  "when": "dimension:minecraft:the_nether",
+  "rf": 6000,
+  "ticks": 200
+}

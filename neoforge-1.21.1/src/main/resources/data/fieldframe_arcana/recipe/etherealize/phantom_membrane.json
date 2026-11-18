@@ -1,0 +1,30 @@
+{
+  "type": "fieldframe:process",
+  "family": "fieldframe_arcana:etherealize",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "minecraft:phantom_membrane"
+      },
+      "count": 1
+    }
+  ],
+  "results": [
+    {
+      "id": "thaumaturge:essentia_crystal",
+      "components": {
+        "thaumaturge:crystal_aspect": {
+          "aspect": "thaumaturge:aer"
+        }
+      },
+      "count": 1
+    },
+    {
+      "id": "minecraft:leather",
+      "count": 1,
+      "chance": 0.5
+    }
+  ],
+  "duration": 100,
+  "energy": 40
+}

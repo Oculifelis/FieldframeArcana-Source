@@ -1,0 +1,59 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:aer",
+      "amount": 2
+    },
+    {
+      "aspect": "thaumaturge:terra",
+      "amount": 2
+    },
+    {
+      "aspect": "thaumaturge:ignis",
+      "amount": 2
+    },
+    {
+      "aspect": "thaumaturge:aqua",
+      "amount": 2
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 2
+    },
+    {
+      "aspect": "thaumaturge:perditio",
+      "amount": 2
+    }
+  ],
+  "key": {
+    "M": {
+      "item": "fieldframe:blank_module"
+    },
+    "T": {
+      "item": "thaumaturge:plate_thaumium"
+    },
+    "X": {
+      "item": "thaumaturge:mirrored_glass"
+    },
+    "C": {
+      "tag": "c:ingots/astral_silver"
+    },
+    "Q": {
+      "item": "thaumaturge:quicksilver"
+    }
+  },
+  "pattern": [
+    "TXT",
+    "CMC",
+    "TQT"
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:primal_condenser",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:primal_condenser"
+  },
+  "vis": 50
+}

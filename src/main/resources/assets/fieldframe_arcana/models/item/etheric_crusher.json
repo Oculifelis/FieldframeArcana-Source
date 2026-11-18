@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "fieldframe_arcana:block/module/etheric_crusher"
+  }
+}

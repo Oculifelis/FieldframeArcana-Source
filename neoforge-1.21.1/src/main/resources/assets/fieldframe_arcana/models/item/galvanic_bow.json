@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:item/bow",
+  "textures": {
+    "layer0": "fieldframe_arcana:item/galvanic_bow"
+  },
+  "overrides": [
+    { "predicate": { "pulling": 1 }, "model": "fieldframe_arcana:item/galvanic_bow_pulling_0" },
+    { "predicate": { "pulling": 1, "pull": 0.65 }, "model": "fieldframe_arcana:item/galvanic_bow_pulling_1" },
+    { "predicate": { "pulling": 1, "pull": 0.9 }, "model": "fieldframe_arcana:item/galvanic_bow_pulling_2" }
+  ]
+}

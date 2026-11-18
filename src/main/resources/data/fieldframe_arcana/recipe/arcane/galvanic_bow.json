@@ -1,0 +1,36 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:aer",
+      "amount": 6
+    },
+    {
+      "aspect": "thaumaturge:ignis",
+      "amount": 4
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 3
+    }
+  ],
+  "key": {
+    "T": "thaumaturge:plate_thaumium",
+    "C": "fieldframe:galvanic_cell",
+    "B": "minecraft:bow",
+    "S": "fieldframe:signal_alloy_ingot"
+  },
+  "pattern": [
+    " TC",
+    "B S",
+    " TC"
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:galvanic_bow",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:galvanic_bow"
+  },
+  "vis": 60
+}

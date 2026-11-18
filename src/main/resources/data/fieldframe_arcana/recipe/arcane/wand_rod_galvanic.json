@@ -1,0 +1,35 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:ignis",
+      "amount": 6
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 4
+    },
+    {
+      "aspect": "thaumaturge:aer",
+      "amount": 4
+    }
+  ],
+  "key": {
+    "R": "thaumaturge:wand_rod_greatwood",
+    "C": "#c:ingots/mithril",
+    "S": "fieldframe:signal_alloy_ingot"
+  },
+  "pattern": [
+    " CS",
+    " RC",
+    "S  "
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:galvanic_rod",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:wand_rod_galvanic"
+  },
+  "vis": 50
+}

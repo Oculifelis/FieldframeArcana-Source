@@ -1,0 +1,32 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:terra",
+      "amount": 4
+    },
+    {
+      "aspect": "thaumaturge:perditio",
+      "amount": 4
+    }
+  ],
+  "key": {
+    "M": "fieldframe:blank_module",
+    "P": "thaumaturge:plate_thaumium",
+    "S": "thaumaturge:salis_mundus",
+    "G": "fieldframe:iron_gear"
+  },
+  "pattern": [
+    "PSP",
+    "GMG",
+    "PSP"
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:etheric_crusher",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:etheric_crusher"
+  },
+  "vis": 40
+}

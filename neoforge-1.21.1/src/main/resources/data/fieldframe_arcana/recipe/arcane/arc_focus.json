@@ -1,0 +1,40 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:ignis",
+      "amount": 3
+    },
+    {
+      "aspect": "thaumaturge:aer",
+      "amount": 3
+    }
+  ],
+  "key": {
+    "Q": {
+      "item": "thaumaturge:quicksilver"
+    },
+    "C": {
+      "tag": "c:ingots/mithril"
+    },
+    "F": {
+      "item": "thaumaturge:focus_1"
+    },
+    "S": {
+      "item": "fieldframe:signal_alloy_ingot"
+    }
+  },
+  "pattern": [
+    " Q ",
+    "CFC",
+    " S "
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:arc_focus",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:arc_focus"
+  },
+  "vis": 40
+}

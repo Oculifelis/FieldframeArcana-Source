@@ -1,0 +1,32 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:aer",
+      "amount": 3
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 3
+    }
+  ],
+  "key": {
+    "G": "thaumaturge:goggles_revealing",
+    "C": "#c:ingots/silver",
+    "P": "fieldframe:galvanic_cell",
+    "B": "thaumaturge:plate_brass"
+  },
+  "pattern": [
+    " G ",
+    "CPC",
+    " B "
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:field_lens",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:field_lens"
+  },
+  "vis": 30
+}

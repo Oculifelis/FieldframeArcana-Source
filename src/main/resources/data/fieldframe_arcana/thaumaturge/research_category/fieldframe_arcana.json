@@ -1,0 +1,33 @@
+{
+  "background": "fieldframe_arcana:textures/gui/research_back.png",
+  "formula": [
+    {
+      "aspect": "thaumaturge:machina",
+      "amount": 20
+    },
+    {
+      "aspect": "thaumaturge:potentia",
+      "amount": 15
+    },
+    {
+      "aspect": "thaumaturge:praecantatio",
+      "amount": 10
+    },
+    {
+      "aspect": "thaumaturge:auram",
+      "amount": 10
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 5
+    },
+    {
+      "aspect": "thaumaturge:alkimia",
+      "amount": 5
+    }
+  ],
+  "icon": "fieldframe_arcana:textures/misc/category_icon.png",
+  "index": 17,
+  "overlay_background": "thaumaturge:textures/gui/gui_research_back_over.png",
+  "required_research": "thaumaturge:unlock_artifice"
+}

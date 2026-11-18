@@ -1,0 +1,43 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:aer",
+      "amount": 4
+    },
+    {
+      "aspect": "thaumaturge:terra",
+      "amount": 2
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 2
+    }
+  ],
+  "key": {
+    "T": {
+      "item": "thaumaturge:plate_thaumium"
+    },
+    "B": {
+      "item": "thaumaturge:traveller_boots"
+    },
+    "P": {
+      "item": "fieldframe:copper_plate"
+    },
+    "C": {
+      "item": "fieldframe:galvanic_cell"
+    }
+  },
+  "pattern": [
+    "TBT",
+    "PCP"
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:galvanic_boots",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:galvanic_boots"
+  },
+  "vis": 50
+}

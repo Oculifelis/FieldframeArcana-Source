@@ -1,0 +1,37 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 4
+    },
+    {
+      "aspect": "thaumaturge:aer",
+      "amount": 4
+    },
+    {
+      "aspect": "thaumaturge:ignis",
+      "amount": 2
+    }
+  ],
+  "key": {
+    "M": "fieldframe:blank_module",
+    "T": "thaumaturge:plate_thaumium",
+    "J": "thaumaturge:vis_relay",
+    "S": "fieldframe:signal_alloy_ingot",
+    "R": "minecraft:redstone_block"
+  },
+  "pattern": [
+    "TJT",
+    "SMS",
+    "TRT"
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:node_cradle",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:node_cradle"
+  },
+  "vis": 60
+}

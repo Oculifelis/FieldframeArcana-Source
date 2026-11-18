@@ -1,0 +1,44 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:aer",
+      "amount": 10
+    },
+    {
+      "aspect": "thaumaturge:ignis",
+      "amount": 6
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 4
+    }
+  ],
+  "key": {
+    "T": {
+      "item": "thaumaturge:plate_thaumium"
+    },
+    "C": {
+      "item": "fieldframe:galvanic_cell"
+    },
+    "P": {
+      "item": "fieldframe:copper_plate"
+    },
+    "A": {
+      "item": "thaumaturge:alumentum"
+    }
+  },
+  "pattern": [
+    "TCT",
+    "PAP",
+    "T T"
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:galvanic_jetpack",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:galvanic_jetpack"
+  },
+  "vis": 90
+}

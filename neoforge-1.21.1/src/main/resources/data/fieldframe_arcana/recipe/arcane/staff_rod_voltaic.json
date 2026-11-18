@@ -1,0 +1,45 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:ignis",
+      "amount": 12
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 10
+    },
+    {
+      "aspect": "thaumaturge:aer",
+      "amount": 10
+    },
+    {
+      "aspect": "thaumaturge:perditio",
+      "amount": 6
+    }
+  ],
+  "key": {
+    "R": {
+      "item": "fieldframe_arcana:wand_rod_voltaic"
+    },
+    "C": {
+      "item": "fieldframe:galvanic_cell"
+    },
+    "P": {
+      "item": "thaumaturge:primal_charm"
+    }
+  },
+  "pattern": [
+    " CP",
+    " RC",
+    "R  "
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:voltaic_staff",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:staff_rod_voltaic"
+  },
+  "vis": 150
+}

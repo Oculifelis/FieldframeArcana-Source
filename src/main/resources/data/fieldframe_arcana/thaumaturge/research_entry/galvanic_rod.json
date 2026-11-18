@@ -1,0 +1,57 @@
+{
+  "category": "fieldframe_arcana:fieldframe_arcana",
+  "name": "research.fieldframe_arcana.galvanic_rod.title",
+  "parents": [
+    "fieldframe_arcana:vis_charger",
+    "thaumaturge:rod_greatwood"
+  ],
+  "column": 2,
+  "row": 4,
+  "icons": [
+    "fieldframe_arcana:wand_rod_galvanic"
+  ],
+  "stages": [
+    {
+      "text": "research.fieldframe_arcana.galvanic_rod.stage_0",
+      "required_knowledge": [
+        {
+          "type": "theory",
+          "category": "thaumaturge:artifice",
+          "amount": 1
+        },
+        {
+          "type": "observation",
+          "category": "thaumaturge:artifice",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "text": "research.fieldframe_arcana.galvanic_rod.stage_1",
+      "recipes": [
+        "fieldframe_arcana:arcane/wand_rod_galvanic",
+        "thaumaturge:wand/assembly/thaumaturge_gold_fieldframe_arcana_galvanic",
+        "thaumaturge:wand/assembly/thaumaturge_thaumium_fieldframe_arcana_galvanic"
+      ]
+    }
+  ],
+  "note_aspects": [
+    {
+      "aspect": "thaumaturge:potentia",
+      "amount": 6
+    },
+    {
+      "aspect": "thaumaturge:praecantatio",
+      "amount": 6
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 4
+    },
+    {
+      "aspect": "thaumaturge:metallum",
+      "amount": 4
+    }
+  ],
+  "complexity": 3
+}

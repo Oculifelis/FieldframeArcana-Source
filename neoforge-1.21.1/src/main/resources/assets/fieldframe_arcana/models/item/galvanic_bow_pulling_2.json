@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/bow",
+  "textures": {
+    "layer0": "fieldframe_arcana:item/galvanic_bow_pulling_2"
+  }
+}

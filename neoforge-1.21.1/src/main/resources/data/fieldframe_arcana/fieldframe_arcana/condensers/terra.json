@@ -1,0 +1,6 @@
+{
+  "aspect": "thaumaturge:terra",
+  "when": "below_y:40",
+  "rf": 6000,
+  "ticks": 200
+}

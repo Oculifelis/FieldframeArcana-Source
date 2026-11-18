@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "fieldframe_arcana:item/galvanic_sword"
+  },
+  "overrides": [
+    { "predicate": { "fieldframe_arcana:active": 1 }, "model": "fieldframe_arcana:item/galvanic_sword_active" }
+  ]
+}

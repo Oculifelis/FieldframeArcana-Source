@@ -1,0 +1,33 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 4
+    },
+    {
+      "aspect": "thaumaturge:aer",
+      "amount": 2
+    }
+  ],
+  "key": {
+    "M": "fieldframe:blank_module",
+    "B": "thaumaturge:plate_brass",
+    "F": "thaumaturge:filter",
+    "C": "#c:ingots/astral_silver",
+    "X": "thaumaturge:fabric"
+  },
+  "pattern": [
+    "BFB",
+    "CMC",
+    "BXB"
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:flux_scrubber",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:flux_scrubber"
+  },
+  "vis": 40
+}

@@ -1,0 +1,37 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:aer",
+      "amount": 3
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 3
+    },
+    {
+      "aspect": "thaumaturge:ignis",
+      "amount": 2
+    }
+  ],
+  "key": {
+    "M": "fieldframe:blank_module",
+    "B": "thaumaturge:plate_brass",
+    "V": "thaumaturge:vis_resonator",
+    "C": "#c:ingots/silver",
+    "A": "thaumaturge:alumentum"
+  },
+  "pattern": [
+    "BVB",
+    "CMC",
+    "BAB"
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:aura_tap",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:aura_tap"
+  },
+  "vis": 40
+}

@@ -1,0 +1,36 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:aer",
+      "amount": 8
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 4
+    },
+    {
+      "aspect": "thaumaturge:ignis",
+      "amount": 4
+    }
+  ],
+  "key": {
+    "F": "thaumaturge:fabric",
+    "C": "fieldframe:galvanic_cell",
+    "E": "minecraft:elytra",
+    "T": "thaumaturge:plate_thaumium"
+  },
+  "pattern": [
+    "FCF",
+    "FEF",
+    "T T"
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:galvanic_wings",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:galvanic_wings"
+  },
+  "vis": 80
+}

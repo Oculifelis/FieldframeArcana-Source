@@ -1,0 +1,48 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="${mod_license}"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+logoFile="fieldframe_arcana_logo.png"
+logoBlur=false
+displayName="${mod_name}"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/fieldframe-arcana"
+authors="Oculifelis"
+credits="Thaumaturge by Leclowndu93150 and contributors. Inspired by Electromagic Tools (TC4 + IC2 addon); no code or art from it."
+description='''
+Thaumaturge magic crossed with Fieldframe's machines: chassis modules that burn essentia for RF and charge wands
+with RF, and the Galvanic Wand Rod that drinks from the batteries you carry.
+'''
+
+[[accessTransformers]]
+file="META-INF/accesstransformer.cfg"
+
+[[mixins]]
+config="${mod_id}.mixins.json"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="thaumaturge"
+    type="required"
+    versionRange="${thaumaturge_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="fieldframe"
+    type="required"
+    versionRange="${fieldframe_version_range}"
+    ordering="AFTER"
+    side="BOTH"

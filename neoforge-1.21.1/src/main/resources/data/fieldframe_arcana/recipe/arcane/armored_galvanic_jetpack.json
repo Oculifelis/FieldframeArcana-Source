@@ -1,0 +1,37 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 8
+    },
+    {
+      "aspect": "thaumaturge:terra",
+      "amount": 6
+    }
+  ],
+  "key": {
+    "H": {
+      "item": "thaumaturge:thaumium_chest"
+    },
+    "J": {
+      "item": "fieldframe_arcana:galvanic_jetpack"
+    },
+    "T": {
+      "item": "thaumaturge:plate_thaumium"
+    }
+  },
+  "pattern": [
+    " H ",
+    "TJT",
+    " T "
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:galvanic_jetpack",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:armored_galvanic_jetpack"
+  },
+  "vis": 60
+}

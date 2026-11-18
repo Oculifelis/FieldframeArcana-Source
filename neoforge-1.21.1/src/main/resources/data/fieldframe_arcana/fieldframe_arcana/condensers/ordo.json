@@ -1,0 +1,6 @@
+{
+  "aspect": "thaumaturge:ordo",
+  "when": "day_sky",
+  "rf": 8000,
+  "ticks": 240
+}

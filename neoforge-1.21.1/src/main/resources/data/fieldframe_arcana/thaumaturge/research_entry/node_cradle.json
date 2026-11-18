@@ -1,0 +1,51 @@
+{
+  "category": "fieldframe_arcana:fieldframe_arcana",
+  "name": "research.fieldframe_arcana.node_cradle.title",
+  "parents": [
+    "fieldframe_arcana:vis_charger",
+    "thaumaturge:vis_relay"
+  ],
+  "column": 6,
+  "row": 6,
+  "icons": [
+    "fieldframe_arcana:node_cradle"
+  ],
+  "stages": [
+    {
+      "text": "research.fieldframe_arcana.node_cradle.stage_0",
+      "required_knowledge": [
+        {
+          "type": "theory",
+          "category": "thaumaturge:artifice",
+          "amount": 1
+        },
+        {
+          "type": "observation",
+          "category": "thaumaturge:artifice",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "text": "research.fieldframe_arcana.node_cradle.stage_1",
+      "recipes": [
+        "fieldframe_arcana:arcane/node_cradle"
+      ]
+    }
+  ],
+  "note_aspects": [
+    {
+      "aspect": "thaumaturge:auram",
+      "amount": 6
+    },
+    {
+      "aspect": "thaumaturge:praecantatio",
+      "amount": 6
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 4
+    }
+  ],
+  "complexity": 3
+}

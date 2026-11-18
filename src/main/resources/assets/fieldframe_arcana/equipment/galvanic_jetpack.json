@@ -1,0 +1,9 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "fieldframe_arcana:galvanic_jetpack"
+      }
+    ]
+  }
+}

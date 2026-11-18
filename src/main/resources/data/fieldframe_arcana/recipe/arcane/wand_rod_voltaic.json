@@ -1,0 +1,40 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:ignis",
+      "amount": 10
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 8
+    },
+    {
+      "aspect": "thaumaturge:aer",
+      "amount": 8
+    },
+    {
+      "aspect": "thaumaturge:perditio",
+      "amount": 4
+    }
+  ],
+  "key": {
+    "R": "thaumaturge:wand_rod_silverwood",
+    "C": "fieldframe:galvanic_cell",
+    "Q": "thaumaturge:quicksilver",
+    "S": "fieldframe:signal_alloy_ingot"
+  },
+  "pattern": [
+    " CQ",
+    " RC",
+    "S  "
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:voltaic_core",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:wand_rod_voltaic"
+  },
+  "vis": 90
+}

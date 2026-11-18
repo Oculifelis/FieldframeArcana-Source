@@ -1,0 +1,43 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:ignis",
+      "amount": 4
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 2
+    }
+  ],
+  "key": {
+    "B": {
+      "item": "thaumaturge:plate_brass"
+    },
+    "J": {
+      "item": "thaumaturge:jar_normal"
+    },
+    "C": {
+      "tag": "c:ingots/silver"
+    },
+    "M": {
+      "item": "fieldframe:blank_module"
+    },
+    "A": {
+      "item": "thaumaturge:alumentum"
+    }
+  },
+  "pattern": [
+    "BJB",
+    "CMC",
+    "BAB"
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:essentia_dynamo",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:essentia_dynamo"
+  },
+  "vis": 25
+}

@@ -1,0 +1,30 @@
+{
+  "type": "fieldframe:process",
+  "family": "fieldframe_arcana:etherealize",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "minecraft:raw_gold"
+      },
+      "count": 1
+    }
+  ],
+  "results": [
+    {
+      "id": "fieldframe:crushed_gold",
+      "count": 2
+    },
+    {
+      "id": "thaumaturge:essentia_crystal",
+      "components": {
+        "thaumaturge:crystal_aspect": {
+          "aspect": "thaumaturge:ordo"
+        }
+      },
+      "count": 1,
+      "chance": 0.15
+    }
+  ],
+  "duration": 120,
+  "energy": 40
+}

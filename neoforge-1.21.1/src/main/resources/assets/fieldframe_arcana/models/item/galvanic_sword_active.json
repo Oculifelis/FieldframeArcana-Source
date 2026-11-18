@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "fieldframe_arcana:item/galvanic_sword",
+    "layer1": {
+      "sprite": "fieldframe_arcana:item/galvanic_sword_glow",
+      "neoforge_data": {
+        "light_emission": 15
+      }
+    }
+  }
+}

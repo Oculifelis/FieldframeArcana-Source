@@ -1,0 +1,41 @@
+{
+  "type": "thaumaturge:arcane_workbench_shaped",
+  "crystals": [
+    {
+      "aspect": "thaumaturge:ignis",
+      "amount": 8
+    },
+    {
+      "aspect": "thaumaturge:ordo",
+      "amount": 6
+    },
+    {
+      "aspect": "thaumaturge:aer",
+      "amount": 6
+    }
+  ],
+  "key": {
+    "R": {
+      "item": "fieldframe_arcana:wand_rod_galvanic"
+    },
+    "C": {
+      "item": "fieldframe:galvanic_cell"
+    },
+    "P": {
+      "item": "thaumaturge:plate_thaumium"
+    }
+  },
+  "pattern": [
+    " CP",
+    " RC",
+    "R  "
+  ],
+  "research": {
+    "entry": "fieldframe_arcana:galvanic_staff",
+    "stage": 0
+  },
+  "result": {
+    "id": "fieldframe_arcana:staff_rod_galvanic"
+  },
+  "vis": 75
+}

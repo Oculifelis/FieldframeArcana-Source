@@ -1,0 +1,117 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = "${mod_id}-${minecraft_version}"
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+
+repositories {
+    flatDir { dirs 'libs' }
+}
+
+dependencies {
+    // Local copies of the jars installed in the Simply NeoForged instance (not committed, see libs/README.md).
+    implementation files('libs/thaumaturge-26.1.2-NeoForge-1.1.0.jar')
+    // JEI is optional: compat/FAJeiPlugin only loads when JEI finds it.
+    compileOnly files('libs/jei-26.1.2-common-api-29.47.0.111.jar')
+    implementation files('libs/fieldframe-0.3.7+26.1.2-neoforge.jar')
+    runtimeOnly files('libs/curios-neoforge-15.0.0+26.1.2.jar')
+    runtimeOnly files('libs/lithostitched-1.8.1-neoforge-26.1.jar')
+    // Fieldframe 0.3.7 requires Metallurgy Recast 1.4.4 and Fundamentum 1.30.0 or later; 1.31.0 is the first that runs beside Jade on a server.
+    runtimeOnly files('libs/metallurgy-recast-26.1.2-neoforge-1.4.4.jar')
+    runtimeOnly files('libs/fundamentum-neoforge-1.31.0+26.1.2.jar')
+    runtimeOnly files('libs/jade-26.1.12+neoforge.jar')
+}
+
+neoForge {
+    version = project.neo_version
+
+    runs {
+        client {
+            client()
+            gameDirectory = project.file('run/client')
+            jvmArgument '-Xmx3G'
+            // Development-only automated client check: tools/run_client_test.sh (runClient -Pautotest=1)
+            if (project.hasProperty('autotest')) {
+                systemProperty 'fieldframe_arcana.autotest', project.property('autotest').toString()
+                systemProperty 'fieldframe_arcana.selftest', 'true'
+            }
+        }
+        server {
+            server()
+            gameDirectory = project.file('run/server')
+            programArgument '--nogui'
+            systemProperty 'fieldframe_arcana.selftest', 'true'
+        }
+        configureEach {
+            systemProperty 'forge.logging.markers', ''
+            logLevel = org.slf4j.event.Level.INFO
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    var replaceProperties = [
+            minecraft_version        : minecraft_version,
+            minecraft_version_range  : minecraft_version_range,
+            neo_version              : neo_version,
+            mod_id                   : mod_id,
+            mod_name                 : mod_name,
+            mod_license              : mod_license,
+            mod_version              : mod_version,
+            thaumaturge_version_range: thaumaturge_version_range,
+            fieldframe_version_range : fieldframe_version_range,
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
+}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
+// Fieldframe's addon rule: only its public API packages (dev.fieldframe.api.*, dev.fieldframe.neoforge.api.*).
+tasks.register('checkApiOnly') {
+    def src = fileTree('src/main/java')
+    inputs.files(src)
+    doLast {
+        def bad = []
+        src.each { f ->
+            f.eachLine { line ->
+                def m = line =~ /^import\s+(static\s+)?(dev\.fieldframe\.[\w.]+)/
+                if (m && !(m[0][2].startsWith('dev.fieldframe.api.') || m[0][2].startsWith('dev.fieldframe.neoforge.api.')
+                        || m[0][2].startsWith('dev.fieldframe.arcana.'))) {
+                    bad << "${f.name}: ${m[0][2]}"
+                }
+            }
+        }
+        if (bad) {
+            throw new GradleException("Fieldframe Arcana uses internal Fieldframe packages:\n" + bad.join('\n'))
+        }
+    }
+}
+compileJava.dependsOn 'checkApiOnly'
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+// LGPL-3.0-or-later code: the licence texts and credits ship in the jar's META-INF
+tasks.named('jar') {
+    from([file('LICENSE'), file('COPYING'), file('CREDITS.md')]) {
+        into 'META-INF'
+    }
+}
