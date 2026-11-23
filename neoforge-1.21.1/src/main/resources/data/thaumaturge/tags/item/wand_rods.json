@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "fieldframe_arcana:wand_rod_galvanic",
-    "fieldframe_arcana:staff_rod_galvanic",
-    "fieldframe_arcana:wand_rod_voltaic",
-    "fieldframe_arcana:staff_rod_voltaic"
-  ]
-}
