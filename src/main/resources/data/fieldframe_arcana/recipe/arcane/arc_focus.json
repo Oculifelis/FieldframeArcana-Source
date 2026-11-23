@@ -11,10 +11,18 @@
     }
   ],
   "key": {
-    "Q": "thaumaturge:quicksilver",
-    "C": "#c:ingots/mithril",
-    "F": "thaumaturge:focus_1",
-    "S": "fieldframe:signal_alloy_ingot"
+    "Q": {
+      "item": "thaumaturge:quicksilver"
+    },
+    "C": {
+      "tag": "c:ingots/mithril"
+    },
+    "F": {
+      "item": "thaumaturge:focus_1"
+    },
+    "S": {
+      "item": "fieldframe:signal_alloy_ingot"
+    }
   },
   "pattern": [
     " Q ",

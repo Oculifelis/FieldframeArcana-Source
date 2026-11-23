@@ -11,11 +11,21 @@
     }
   ],
   "key": {
-    "B": "thaumaturge:plate_brass",
-    "J": "thaumaturge:jar_normal",
-    "C": "#c:ingots/silver",
-    "M": "fieldframe:blank_module",
-    "A": "thaumaturge:alumentum"
+    "B": {
+      "item": "thaumaturge:plate_brass"
+    },
+    "J": {
+      "item": "thaumaturge:jar_normal"
+    },
+    "C": {
+      "tag": "c:ingots/silver"
+    },
+    "M": {
+      "item": "fieldframe:blank_module"
+    },
+    "A": {
+      "item": "thaumaturge:alumentum"
+    }
   },
   "pattern": [
     "BJB",

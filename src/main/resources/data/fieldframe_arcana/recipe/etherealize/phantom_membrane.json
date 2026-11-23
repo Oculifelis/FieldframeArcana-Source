@@ -3,7 +3,9 @@
   "family": "fieldframe_arcana:etherealize",
   "inputs": [
     {
-      "ingredient": "minecraft:phantom_membrane",
+      "ingredient": {
+        "item": "minecraft:phantom_membrane"
+      },
       "count": 1
     }
   ],

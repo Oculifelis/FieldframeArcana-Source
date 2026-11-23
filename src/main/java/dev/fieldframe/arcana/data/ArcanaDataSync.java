@@ -8,7 +8,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
@@ -25,7 +25,7 @@ public record ArcanaDataSync(Map<String, EssentiaFuels.Fuel> fuels, List<Condens
     private static final StreamCodec<RegistryFriendlyByteBuf, EssentiaFuels.Fuel> FUEL = StreamCodec.composite(
             ByteBufCodecs.VAR_LONG, EssentiaFuels.Fuel::rf, ByteBufCodecs.FLOAT, EssentiaFuels.Fuel::flux, EssentiaFuels.Fuel::new);
     private static final StreamCodec<RegistryFriendlyByteBuf, Condensers.Entry> ENTRY = StreamCodec.composite(
-            Identifier.STREAM_CODEC, Condensers.Entry::id,
+            ResourceLocation.STREAM_CODEC, Condensers.Entry::id,
             ByteBufCodecs.STRING_UTF8, Condensers.Entry::aspect,
             ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8), e -> Optional.ofNullable(e.result()),
             ByteBufCodecs.STRING_UTF8, Condensers.Entry::when,

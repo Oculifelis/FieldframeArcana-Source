@@ -16,7 +16,7 @@ public final class WandCharge {
     }
 
     public static int capacity(ItemStack wand) {
-        return WandVisHelper.capacityOf(wand);
+        return WandVisHelper.getMaxVis(wand);
     }
 
     /** Centivis still missing over all primals. */
@@ -64,7 +64,7 @@ public final class WandCharge {
                 }
             }
             int give = Math.max(1, Math.min(next - lowVis, centivis - added));
-            WandVisHelper.setStored(wand, low, lowVis + give);
+            WandVisHelper.storeVis(wand, low, lowVis + give);
             added += give;
         }
         return added;

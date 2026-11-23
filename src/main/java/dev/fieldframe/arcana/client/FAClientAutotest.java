@@ -100,9 +100,9 @@ public final class FAClientAutotest {
                 mc.options.renderDistance().set(4);
                 mc.options.simulationDistance().set(4);
                 deleteOldWorld(mc);
-                LevelSettings settings = new LevelSettings(WORLD, GameType.SURVIVAL, LevelSettings.DifficultySettings.DEFAULT, true, WorldDataConfiguration.DEFAULT);
+                LevelSettings settings = new LevelSettings(WORLD, GameType.SURVIVAL, false, net.minecraft.world.Difficulty.NORMAL, true, new net.minecraft.world.level.GameRules(), WorldDataConfiguration.DEFAULT);
                 LOG.info("FATEST creating world {}", WORLD);
-                mc.createWorldOpenFlows().createFreshLevel(WORLD, settings, new WorldOptions(20261105L, false, false), WorldPresets::createFlatWorldDimensions, title);
+                mc.createWorldOpenFlows().createFreshLevel(WORLD, settings, new WorldOptions(20261105L, false, false), ra -> ra.registryOrThrow(net.minecraft.core.registries.Registries.WORLD_PRESET).getHolderOrThrow(WorldPresets.FLAT).value().createWorldDimensions(), title);
             }
             return;
         }
@@ -121,7 +121,7 @@ public final class FAClientAutotest {
             case 125 -> shot(mc, "sword_on");
             case 128 -> shot(mc, "sword_on_frame2");
             case 135 -> {
-                mc.player.getInventory().setSelectedSlot(1);
+                mc.player.getInventory().selected = 1;
                 LOG.info("FATEST husks before {}", "(logged at release)");
             }
             case 140 -> {
@@ -148,9 +148,9 @@ public final class FAClientAutotest {
             }
             // read the server a few ticks later: the use packet is handled after a same-tick server task
             case 198 -> onServer(mc, p -> LOG.info("FATEST bow quick rf {} cooldown {}", Charge.stored(p.getMainHandItem()),
-                    p.getCooldowns().isOnCooldown(p.getMainHandItem())));
+                    p.getCooldowns().isOnCooldown(p.getMainHandItem().getItem())));
             case 200 -> {
-                mc.player.getInventory().setSelectedSlot(2);
+                mc.player.getInventory().selected = 2;
                 mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
             }
             case 210 -> shot(mc, "jetpack_back");
@@ -226,7 +226,7 @@ public final class FAClientAutotest {
             p.setItemSlot(EquipmentSlot.CHEST, pack);
             LOG.info("FATEST gear given: sword {}, bow {}, jetpack {} RF", Charge.stored(sword), Charge.stored(bow), Charge.stored(pack));
         });
-        mc.player.getInventory().setSelectedSlot(0);
+        mc.player.getInventory().selected = 0;
     }
 
     private static void logHusks(Minecraft mc, String when) {
@@ -269,7 +269,7 @@ public final class FAClientAutotest {
 
     private static void shot(Minecraft mc, String view) {
         String name = "fatest_" + view + "_" + (System.currentTimeMillis() / 1000) + ".png";
-        Screenshot.grab(mc.gameDirectory, name, mc.getMainRenderTarget(), 1, msg -> LOG.info("FATEST screenshot message: {}", msg.getString()));
+        Screenshot.grab(mc.gameDirectory, name, mc.getMainRenderTarget(), msg -> LOG.info("FATEST screenshot message: {}", msg.getString()));
         LOG.info("FATEST shot {}", name);
     }
 

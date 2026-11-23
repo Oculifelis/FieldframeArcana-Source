@@ -10,12 +10,12 @@ import dev.fieldframe.arcana.item.ArcanaToolEvents;
 import dev.fieldframe.arcana.item.GalvanicBowItem;
 import dev.fieldframe.arcana.module.ArcanaModules;
 import dev.fieldframe.neoforge.api.FieldframeForgeApi;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,18 +35,19 @@ public final class FieldframeArcana {
         ArcFocus.register();
         SelfTest.register();
         ArcanaDataSync.register(bus);
+        dev.fieldframe.arcana.item.JetpackInput.register(bus);
         if (dist == Dist.CLIENT) {
             dev.fieldframe.arcana.client.ArcanaClient.init(bus);
         }
-        NeoForge.EVENT_BUS.addListener((AddServerReloadListenersEvent e) -> {
-            e.addListener(id("tuning"), new ArcanaTuning.Listener());
-            e.addListener(id("essentia_fuels"), new EssentiaFuels.Listener());
-            e.addListener(id("condensers"), new Condensers.Listener());
+        NeoForge.EVENT_BUS.addListener((AddReloadListenerEvent e) -> {
+            e.addListener(new ArcanaTuning.Listener());
+            e.addListener(new EssentiaFuels.Listener());
+            e.addListener(new Condensers.Listener());
         });
         NeoForge.EVENT_BUS.addListener((ServerStoppedEvent e) -> ArcanaModules.serverStopped());
     }
 
-    public static Identifier id(String path) {
-        return Identifier.fromNamespaceAndPath(MODID, path);
+    public static ResourceLocation id(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, path);
     }
 }

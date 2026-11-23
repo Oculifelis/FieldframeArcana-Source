@@ -7,13 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.profiling.ProfilerFiller;
-import org.jspecify.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * What the Primal Condenser can make, and when. {@code data/<ns>/fieldframe_arcana/condensers/*.json}:
@@ -24,7 +22,7 @@ import org.jspecify.annotations.Nullable;
  * matches the module's chosen aspect and holds now is made. {@code "remove": true} drops a file of the same id.
  */
 public final class Condensers {
-    public record Entry(Identifier id, String aspect, @Nullable String result, String when, long rf, int ticks) {
+    public record Entry(ResourceLocation id, String aspect, @Nullable String result, String when, long rf, int ticks) {
     }
 
     private static volatile List<Entry> entries = List.of();
@@ -41,13 +39,13 @@ public final class Condensers {
         entries = List.copyOf(next);
     }
 
-    public static final class Listener extends SimpleJsonResourceReloadListener<JsonElement> {
+    public static final class Listener extends SimpleJsonResourceReloadListener {
         public Listener() {
-            super(ExtraCodecs.JSON, FileToIdConverter.json("fieldframe_arcana/condensers"));
+            super(new com.google.gson.Gson(), "fieldframe_arcana/condensers");
         }
 
         @Override
-        protected void apply(Map<Identifier, JsonElement> files, ResourceManager rm, ProfilerFiller profiler) {
+        protected void apply(Map<ResourceLocation, JsonElement> files, ResourceManager rm, ProfilerFiller profiler) {
             List<Entry> next = new ArrayList<>();
             new TreeMap<>(files).forEach((file, json) -> {
                 try {
@@ -61,8 +59,8 @@ public final class Condensers {
                     if (rf < 0 || ticks < 1 || ticks > 72_000) {
                         throw new IllegalArgumentException("rf >= 0, ticks 1..72000");
                     }
-                    next.add(new Entry(file, Identifier.parse(o.get("aspect").getAsString()).toString(),
-                            o.has("result") ? Identifier.parse(o.get("result").getAsString()).toString() : null, when, rf, ticks));
+                    next.add(new Entry(file, ResourceLocation.parse(o.get("aspect").getAsString()).toString(),
+                            o.has("result") ? ResourceLocation.parse(o.get("result").getAsString()).toString() : null, when, rf, ticks));
                 } catch (RuntimeException ex) {
                     FieldframeArcana.LOG.error("Condenser {}: {} (skipped)", file, ex.toString());
                 }

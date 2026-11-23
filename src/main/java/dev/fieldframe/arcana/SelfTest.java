@@ -5,6 +5,7 @@ import com.leclowndu93150.thaumaturge.api.aspect.TTAspects;
 import com.leclowndu93150.thaumaturge.api.wands.WandVis;
 import com.leclowndu93150.thaumaturge.registry.TTDataComponents;
 import dev.fieldframe.arcana.data.ArcanaTuning;
+import dev.fieldframe.arcana.item.JetpackInput;
 import dev.fieldframe.arcana.item.ArcanaComponents;
 import dev.fieldframe.arcana.item.Charge;
 import dev.fieldframe.arcana.item.GalvanicBowItem;
@@ -19,12 +20,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Unit;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.monster.zombie.Zombie;
-import net.minecraft.world.entity.player.Input;
-import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -152,7 +152,7 @@ final class SelfTest {
     }
 
     private static Zombie zombie(ServerLevel level, double x, double y, double z) {
-        Zombie zb = EntityType.ZOMBIE.create(level, EntitySpawnReason.COMMAND);
+        Zombie zb = EntityType.ZOMBIE.create(level);
         zb.setPos(x, y, z);
         zb.setNoAi(true);
         level.addFreshEntity(zb);
@@ -176,7 +176,7 @@ final class SelfTest {
             float offBonus = sword.getItem().getAttackDamageBonus(target, 7f, level.damageSources().mobAttack(attacker));
             float hp0 = near.getHealth();
             sword.getItem().postHurtEnemy(sword, target, attacker);
-            sword.getItem().inventoryTick(sword, level, attacker, EquipmentSlot.MAINHAND);
+            sword.getItem().inventoryTick(sword, level, attacker, 0, true);
             check("sword_off_plain", offBonus == 0f && near.getHealth() == hp0 && Charge.stored(sword) == full,
                     "bonus " + offBonus + ", rf " + Charge.stored(sword) + " of " + full);
 
@@ -190,13 +190,13 @@ final class SelfTest {
                     "near hp " + hp + " -> " + near.getHealth() + ", rf " + full + " -> " + Charge.stored(sword) + " (want " + want + ")");
             check("sword_no_self_arc", attacker.getHealth() == attacker.getMaxHealth(), "attacker hp " + attacker.getHealth());
             int before = Charge.stored(sword);
-            sword.getItem().inventoryTick(sword, level, attacker, EquipmentSlot.MAINHAND);
+            sword.getItem().inventoryTick(sword, level, attacker, 0, true);
             check("sword_on_drain", before - Charge.stored(sword) == (int) ArcanaTuning.get("galvanic_sword.rf_per_tick"),
                     "rf " + before + " -> " + Charge.stored(sword));
 
             // Running dry switches it off.
             sword.set(ArcanaComponents.ENERGY.get(), 5);
-            sword.getItem().inventoryTick(sword, level, attacker, EquipmentSlot.MAINHAND);
+            sword.getItem().inventoryTick(sword, level, attacker, 0, true);
             check("sword_auto_off", !GalvanicSwordItem.active(sword) && Charge.stored(sword) == 0, "active " + GalvanicSwordItem.active(sword));
             check("sword_no_wear", !sword.isDamageableItem(), "damageable " + sword.isDamageableItem());
         } finally {
@@ -222,10 +222,11 @@ final class SelfTest {
         check("bow_fast_draw", GalvanicBowItem.power(bow, (int) ArcanaTuning.get("galvanic_bow.draw_ticks")) == 1f,
                 "power at draw_ticks " + GalvanicBowItem.power(bow, (int) ArcanaTuning.get("galvanic_bow.draw_ticks")));
         List<AbstractArrow> before = level.getEntitiesOfClass(AbstractArrow.class, p.getBoundingBox().inflate(8));
-        boolean shot = bow.getItem().releaseUsing(bow, level, p, bow.getUseDuration(p) - 20);
+        bow.getItem().releaseUsing(bow, level, p, bow.getUseDuration(p) - 20);
         List<AbstractArrow> after = level.getEntitiesOfClass(AbstractArrow.class, p.getBoundingBox().inflate(8),
                 a -> !before.contains(a));
-        boolean bolt = after.size() == 1 && after.get(0).entityTags().contains(GalvanicBowItem.BOLT)
+        boolean shot = !after.isEmpty();
+        boolean bolt = after.size() == 1 && after.get(0).getTags().contains(GalvanicBowItem.BOLT)
                 && after.get(0).pickup == AbstractArrow.Pickup.CREATIVE_ONLY;
         check("bow_bolt", shot && bolt && full - Charge.stored(bow) == (int) ArcanaTuning.get("galvanic_bow.rf_per_shot")
                         && p.getInventory().countItem(Items.ARROW) == 0,
@@ -240,12 +241,12 @@ final class SelfTest {
         List<AbstractArrow> beforeQ = level.getEntitiesOfClass(AbstractArrow.class, p.getBoundingBox().inflate(8));
         bow.getItem().use(level, p, InteractionHand.MAIN_HAND);
         List<AbstractArrow> quick = level.getEntitiesOfClass(AbstractArrow.class, p.getBoundingBox().inflate(8), a -> !beforeQ.contains(a));
-        boolean quickBolt = quick.size() == 1 && quick.get(0).entityTags().contains(GalvanicBowItem.BOLT) && quick.get(0).isCritArrow();
+        boolean quickBolt = quick.size() == 1 && quick.get(0).getTags().contains(GalvanicBowItem.BOLT) && quick.get(0).isCritArrow();
         check("bow_quick_fire", switched && quickBolt && !p.isUsingItem()
                         && beforeQuick - Charge.stored(bow) == GalvanicBowItem.quickCost()
-                        && p.getCooldowns().isOnCooldown(bow),
+                        && p.getCooldowns().isOnCooldown(bow.getItem()),
                 "switched " + switched + ", new arrows " + quick.size() + ", bolt " + quickBolt + ", using " + p.isUsingItem()
-                        + ", rf " + beforeQuick + " -> " + Charge.stored(bow) + ", cooldown " + p.getCooldowns().isOnCooldown(bow));
+                        + ", rf " + beforeQuick + " -> " + Charge.stored(bow) + ", cooldown " + p.getCooldowns().isOnCooldown(bow.getItem()));
         quick.forEach(AbstractArrow::discard);
         ItemStack emptyQuick = new ItemStack(ARegistry.GALVANIC_BOW.get());
         emptyQuick.set(ArcanaComponents.MODE.get(), GalvanicBowItem.QUICK);
@@ -257,7 +258,10 @@ final class SelfTest {
         p.stopUsingItem();
         ItemStack empty = new ItemStack(ARegistry.GALVANIC_BOW.get());
         p.setItemInHand(InteractionHand.MAIN_HAND, empty);
-        check("bow_empty_needs_arrows", !empty.getItem().releaseUsing(empty, level, p, empty.getUseDuration(p) - 20), "shot with no arrows");
+        List<AbstractArrow> beforeN = level.getEntitiesOfClass(AbstractArrow.class, p.getBoundingBox().inflate(8));
+        empty.getItem().releaseUsing(empty, level, p, empty.getUseDuration(p) - 20);
+        check("bow_empty_needs_arrows", level.getEntitiesOfClass(AbstractArrow.class, p.getBoundingBox().inflate(8), a -> !beforeN.contains(a)).isEmpty(),
+                "shot with no arrows");
         p.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
     }
 
@@ -268,14 +272,14 @@ final class SelfTest {
         Charge.fill(pack);
         p.setItemSlot(EquipmentSlot.CHEST, pack);
         int full = Charge.stored(pack);
-        p.setLastClientInput(new Input(false, false, false, false, true, false, false));
+        JetpackInput.set(p, JetpackInput.JUMP);
         p.fallDistance = 5;
         NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(p));
         check("jetpack_lift", p.getDeltaMovement().y > 0 && full - Charge.stored(pack) == (int) ArcanaTuning.get("galvanic_jetpack.rf_per_tick")
                 && p.fallDistance == 0, "vy " + p.getDeltaMovement().y + ", rf used " + (full - Charge.stored(pack)) + ", fall " + p.fallDistance);
         // Hover: not holding jump while falling fast, the fall is held at hover_fall.
         pack.set(ArcanaComponents.MODE.get(), GalvanicJetpackItem.HOVER);
-        p.setLastClientInput(Input.EMPTY);
+        JetpackInput.set(p, 0);
         p.setDeltaMovement(0, -0.8, 0);
         int mid = Charge.stored(pack);
         NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(p));
@@ -283,7 +287,7 @@ final class SelfTest {
                 && mid - Charge.stored(pack) == (int) ArcanaTuning.get("galvanic_jetpack.hover_rf_per_tick"), "vy " + p.getDeltaMovement().y);
         // Off: nothing.
         pack.set(ArcanaComponents.MODE.get(), GalvanicJetpackItem.OFF);
-        p.setLastClientInput(new Input(false, false, false, false, true, false, false));
+        JetpackInput.set(p, JetpackInput.JUMP);
         p.setDeltaMovement(0, -0.5, 0);
         int off = Charge.stored(pack);
         NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(p));
@@ -293,19 +297,18 @@ final class SelfTest {
         ItemStack armored = new ItemStack(ARegistry.ARMORED_GALVANIC_JETPACK.get());
         Charge.fill(armored);
         p.setItemSlot(EquipmentSlot.CHEST, armored);
-        p.setLastClientInput(new Input(false, false, false, false, true, false, false));
+        JetpackInput.set(p, JetpackInput.JUMP);
         p.setDeltaMovement(0, 0, 0);
         int afull = Charge.stored(armored);
         NeoForge.EVENT_BUS.post(new PlayerTickEvent.Post(p));
         check("armored_jetpack_lift", p.getDeltaMovement().y > 0 && afull - Charge.stored(armored) == (int) ArcanaTuning.get("galvanic_jetpack.rf_per_tick")
                 && afull == (int) ArcanaTuning.get("armored_galvanic_jetpack.capacity"), "vy " + p.getDeltaMovement().y + ", full " + afull);
         ItemStack plate = new ItemStack(ARegistry.ARMORED_GALVANIC_JETPACK.get());
-        double armor = plate.getOrDefault(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,
-                        net.minecraft.world.item.component.ItemAttributeModifiers.EMPTY).modifiers().stream()
+        double armor = plate.getAttributeModifiers().modifiers().stream()
                 .filter(e -> e.attribute().is(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR))
                 .mapToDouble(e -> e.modifier().amount()).sum();
         check("armored_jetpack_armor", armor == 7 && Charge.stored(plate) == 0, "armor " + armor);
         p.setItemSlot(EquipmentSlot.CHEST, ItemStack.EMPTY);
-        p.setLastClientInput(Input.EMPTY);
+        JetpackInput.set(p, 0);
     }
 }

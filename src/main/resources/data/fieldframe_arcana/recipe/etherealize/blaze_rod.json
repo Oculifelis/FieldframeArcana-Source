@@ -3,7 +3,9 @@
   "family": "fieldframe_arcana:etherealize",
   "inputs": [
     {
-      "ingredient": "minecraft:blaze_rod",
+      "ingredient": {
+        "item": "minecraft:blaze_rod"
+      },
       "count": 1
     }
   ],

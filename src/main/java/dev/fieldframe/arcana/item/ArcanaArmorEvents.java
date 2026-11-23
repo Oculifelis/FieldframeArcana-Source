@@ -12,8 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.player.Input;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -30,7 +29,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
  * <ul>
  *   <li>Boots: while on and charged, extra step height and speed, paid {@code galvanic_boots.rf_per_metre} for the
  *   ground covered.</li>
- *   <li>Wings: glide like an elytra (the item has the glider component); while on, charged and gliding, a gentle thrust
+ *   <li>Wings: glide like an elytra; while on, charged and gliding, a gentle thrust
  *   along the look direction costs {@code galvanic_wings.rf_per_tick}; sparks trail from both wing tips while it
  *   pushes.</li>
  *   <li>Jetpack: on and charged, holding jump lifts the wearer ({@code galvanic_jetpack.thrust}, up to
@@ -40,8 +39,8 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
  * </ul>
  */
 public final class ArcanaArmorEvents {
-    private static final Identifier STEP = FieldframeArcana.id("galvanic_boots_step");
-    private static final Identifier SPEED = FieldframeArcana.id("galvanic_boots_speed");
+    private static final ResourceLocation STEP = FieldframeArcana.id("galvanic_boots_step");
+    private static final ResourceLocation SPEED = FieldframeArcana.id("galvanic_boots_speed");
     /** Fractions of RF owed for distance, per player, so short steps are still paid for. */
     private static final Map<UUID, Double> OWED = new WeakHashMap<>();
 
@@ -83,7 +82,7 @@ public final class ArcanaArmorEvents {
                 AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     }
 
-    private static void modifier(Player player, Holder<Attribute> attribute, Identifier id, double amount, AttributeModifier.Operation op) {
+    private static void modifier(Player player, Holder<Attribute> attribute, ResourceLocation id, double amount, AttributeModifier.Operation op) {
         AttributeInstance inst = player.getAttribute(attribute);
         if (inst == null) {
             return;
@@ -125,10 +124,9 @@ public final class ArcanaArmorEvents {
         if (mode == GalvanicJetpackItem.OFF || player.getAbilities().flying || player.isFallFlying() || player.isPassenger()) {
             return;
         }
-        Input in = player.getLastClientInput();
         Vec3 v = player.getDeltaMovement();
-        boolean lift = in.jump();
-        boolean hover = !lift && mode == GalvanicJetpackItem.HOVER && !player.onGround() && !in.shift();
+        boolean lift = JetpackInput.held(player, JetpackInput.JUMP);
+        boolean hover = !lift && mode == GalvanicJetpackItem.HOVER && !player.onGround() && !JetpackInput.held(player, JetpackInput.SHIFT);
         // (No check on v.y: a player's motion is the client's, so the server's copy is stale; hold it every tick.)
         if (!lift && !hover || !Charge.use(pack, (int) ArcanaTuning.get(lift ? "galvanic_jetpack.rf_per_tick" : "galvanic_jetpack.hover_rf_per_tick"))) {
             return;
@@ -137,12 +135,13 @@ public final class ArcanaArmorEvents {
                 : ArcanaTuning.get("galvanic_jetpack.hover_fall");
         double steer = ArcanaTuning.get("galvanic_jetpack.air_control");
         float yaw = player.getYRot() * Mth.DEG_TO_RAD;
-        double fwd = (in.forward() ? 1 : 0) - (in.backward() ? 1 : 0), strafe = (in.left() ? 1 : 0) - (in.right() ? 1 : 0);
+        double fwd = (JetpackInput.held(player, JetpackInput.FORWARD) ? 1 : 0) - (JetpackInput.held(player, JetpackInput.BACK) ? 1 : 0);
+        double strafe = (JetpackInput.held(player, JetpackInput.LEFT) ? 1 : 0) - (JetpackInput.held(player, JetpackInput.RIGHT) ? 1 : 0);
         double dx = (strafe * Math.cos(yaw) - fwd * Math.sin(yaw)) * steer, dz = (fwd * Math.cos(yaw) + strafe * Math.sin(yaw)) * steer;
         player.setDeltaMovement(v.x + dx, y, v.z + dz);
         player.hurtMarked = true;
         player.resetFallDistance();
-        player.connection.resetFlyingTicks();
+        player.connection.aboveGroundTickCount = 0;
         if (player.level() instanceof ServerLevel level) {
             exhaust(level, player, lift);
         }

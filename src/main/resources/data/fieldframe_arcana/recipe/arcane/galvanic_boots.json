@@ -15,10 +15,18 @@
     }
   ],
   "key": {
-    "T": "thaumaturge:plate_thaumium",
-    "B": "thaumaturge:traveller_boots",
-    "P": "fieldframe:copper_plate",
-    "C": "fieldframe:galvanic_cell"
+    "T": {
+      "item": "thaumaturge:plate_thaumium"
+    },
+    "B": {
+      "item": "thaumaturge:traveller_boots"
+    },
+    "P": {
+      "item": "fieldframe:copper_plate"
+    },
+    "C": {
+      "item": "fieldframe:galvanic_cell"
+    }
   },
   "pattern": [
     "TBT",

@@ -15,9 +15,12 @@
     }
   ],
   "key": {
-    "T": "thaumaturge:plate_thaumium",
+    "T": {
+      "item": "thaumaturge:plate_thaumium"
+    },
     "O": {
-      "neoforge:ingredient_type": "neoforge:components",
+      "type": "neoforge:components",
+      "strict": false,
       "items": "thaumaturge:essentia_crystal",
       "components": {
         "thaumaturge:crystal_aspect": {
@@ -25,9 +28,15 @@
         }
       }
     },
-    "S": "fieldframe:signal_alloy_ingot",
-    "M": "fieldframe:blank_module",
-    "R": "minecraft:redstone_block"
+    "S": {
+      "item": "fieldframe:signal_alloy_ingot"
+    },
+    "M": {
+      "item": "fieldframe:blank_module"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    }
   },
   "pattern": [
     "TOT",

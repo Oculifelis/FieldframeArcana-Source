@@ -1,14 +1,14 @@
 package dev.fieldframe.arcana.item;
 
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.core.Holder;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 
 /**
@@ -22,12 +22,12 @@ public class GalvanicJetpackItem extends GalvanicArmorItem {
 
     private final String group;
 
-    public GalvanicJetpackItem(Properties props) {
-        this(props, "galvanic_jetpack");
+    public GalvanicJetpackItem(Holder<ArmorMaterial> material, Properties props) {
+        this(material, props, "galvanic_jetpack");
     }
 
-    public GalvanicJetpackItem(Properties props, String group) {
-        super(props, group);
+    public GalvanicJetpackItem(Holder<ArmorMaterial> material, Properties props, String group) {
+        super(material, Type.CHESTPLATE, props, group);
         this.group = group;
     }
 
@@ -45,7 +45,7 @@ public class GalvanicJetpackItem extends GalvanicArmorItem {
     }
 
     @Override
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (!player.isShiftKeyDown()) {
             return super.use(level, player, hand);
         }
@@ -57,20 +57,20 @@ public class GalvanicJetpackItem extends GalvanicArmorItem {
         };
         stack.set(ArcanaComponents.MODE.get(), next);
         if (!level.isClientSide()) {
-            player.sendOverlayMessage(Component.translatable("fieldframe_arcana.mode_set",
+            dev.fieldframe.arcana.item.Charge.overlay(player, Component.translatable("fieldframe_arcana.mode_set",
                     Component.translatable("mode.fieldframe_arcana.jetpack_" + name(next))).withStyle(ChatFormatting.AQUA));
         }
-        return InteractionResult.SUCCESS;
+        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext ctx, TooltipDisplay display, Consumer<Component> out, TooltipFlag flag) {
-        out.accept(Charge.tooltip(stack));
-        out.accept(Component.translatable("tooltip.fieldframe_arcana.mode",
+    public void appendHoverText(ItemStack stack, TooltipContext ctx, java.util.List<Component> out, TooltipFlag flag) {
+        out.add(Charge.tooltip(stack));
+        out.add(Component.translatable("tooltip.fieldframe_arcana.mode",
                 Component.translatable("mode.fieldframe_arcana.jetpack_" + name(mode(stack)))).withStyle(ChatFormatting.GRAY));
-        out.accept(Component.translatable("tooltip.fieldframe_arcana.galvanic_jetpack").withStyle(ChatFormatting.DARK_PURPLE));
+        out.add(Component.translatable("tooltip.fieldframe_arcana.galvanic_jetpack").withStyle(ChatFormatting.DARK_PURPLE));
         if (armored()) {
-            out.accept(Component.translatable("tooltip.fieldframe_arcana.armored_galvanic_jetpack").withStyle(ChatFormatting.DARK_PURPLE));
+            out.add(Component.translatable("tooltip.fieldframe_arcana.armored_galvanic_jetpack").withStyle(ChatFormatting.DARK_PURPLE));
         }
     }
 }

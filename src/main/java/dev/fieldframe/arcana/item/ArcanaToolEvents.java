@@ -26,7 +26,7 @@ import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockDropsEvent;
-import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 
 /** World behaviour of the Field Drill and Field Saw: empty slowdown, the drill's 3x3 and refining, the saw's felling. */
 public final class ArcanaToolEvents {
@@ -49,7 +49,7 @@ public final class ArcanaToolEvents {
         }
     }
 
-    private static void onBreak(BreakBlockEvent e) {
+    private static void onBreak(BlockEvent.BreakEvent e) {
         if (!(e.getPlayer() instanceof ServerPlayer player) || !(e.getLevel() instanceof ServerLevel level) || BUSY.contains(player)) {
             return;
         }
@@ -153,11 +153,11 @@ public final class ArcanaToolEvents {
         for (ItemEntity drop : e.getDrops()) {
             ItemStack in = drop.getItem();
             SingleRecipeInput input = new SingleRecipeInput(in.copyWithCount(1));
-            Optional<RecipeHolder<SmeltingRecipe>> recipe = level.recipeAccess().getRecipeFor(RecipeType.SMELTING, input, level);
+            Optional<RecipeHolder<SmeltingRecipe>> recipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, input, level);
             if (recipe.isEmpty()) {
                 continue;
             }
-            ItemStack out = recipe.get().value().assemble(input);
+            ItemStack out = recipe.get().value().assemble(input, level.registryAccess());
             int n = in.getCount();
             float vis = visEach * n;
             if (out.isEmpty() || !Charge.has(tool, rfEach * n) || (vis > 0 && AuraHelper.drainVis(level, e.getPos(), vis, true) < vis)) {

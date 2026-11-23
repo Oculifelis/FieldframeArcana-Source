@@ -16,13 +16,16 @@ Thaumaturge magic crossed with Fieldframe's machines: chassis modules that burn 
 with RF, and the Galvanic Wand Rod that drinks from the batteries you carry.
 '''
 
+[[accessTransformers]]
+file="META-INF/accesstransformer.cfg"
+
 [[mixins]]
 config="${mod_id}.mixins.json"
 
 [[dependencies.${mod_id}]]
     modId="neoforge"
     type="required"
-    versionRange="[26.1.2.71,)"
+    versionRange="${neo_version_range}"
     ordering="NONE"
     side="BOTH"
 [[dependencies.${mod_id}]]

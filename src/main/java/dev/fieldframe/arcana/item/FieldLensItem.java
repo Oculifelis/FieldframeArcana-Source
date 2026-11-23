@@ -6,7 +6,6 @@ import dev.fieldframe.arcana.data.ArcanaTuning;
 import dev.fieldframe.neoforge.api.FieldframeForgeApi;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -17,22 +16,23 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.core.Holder;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import org.jspecify.annotations.Nullable;
 
 /**
  * Electric goggles of revealing. Carries Thaumaturge's goggles component, so it reveals like the Goggles of Revealing.
  * Worn and charged, it costs {@code field_lens.rf_per_second} and gives night vision; while the wearer sneaks it
  * shows the status of every module of the chassis in view, or the vis and flux of the chunk, on the action bar.
  */
-public class FieldLensItem extends Item implements Charge.Powered {
-    public FieldLensItem(Properties props) {
-        super(props);
+public class FieldLensItem extends ArmorItem implements Charge.Powered {
+    public FieldLensItem(Holder<ArmorMaterial> material, Properties props) {
+        super(material, Type.HELMET, props);
     }
 
     @Override
@@ -41,8 +41,9 @@ public class FieldLensItem extends Item implements Charge.Powered {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, ServerLevel level, Entity owner, @Nullable EquipmentSlot slot) {
-        if (slot != EquipmentSlot.HEAD || !(owner instanceof Player player) || level.getGameTime() % 20 != 0) {
+    public void inventoryTick(ItemStack stack, Level world, Entity owner, int slotId, boolean selected) {
+        if (!(world instanceof ServerLevel level) || !Charge.worn(owner, stack, EquipmentSlot.HEAD) || !(owner instanceof Player player)
+                || level.getGameTime() % 20 != 0) {
             return;
         }
         if (!Charge.use(stack, (int) ArcanaTuning.get("field_lens.rf_per_second"))) {
@@ -50,7 +51,7 @@ public class FieldLensItem extends Item implements Charge.Powered {
         }
         player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 300, 0, true, false));
         if (player.isShiftKeyDown()) {
-            player.sendOverlayMessage(readout(level, player));
+            dev.fieldframe.arcana.item.Charge.overlay(player, readout(level, player));
         }
     }
 
@@ -110,8 +111,8 @@ public class FieldLensItem extends Item implements Charge.Powered {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext ctx, TooltipDisplay display, Consumer<Component> out, TooltipFlag flag) {
-        out.accept(Charge.tooltip(stack));
-        out.accept(Component.translatable("tooltip.fieldframe_arcana.field_lens").withStyle(ChatFormatting.DARK_PURPLE));
+    public void appendHoverText(ItemStack stack, TooltipContext ctx, java.util.List<Component> out, TooltipFlag flag) {
+        out.add(Charge.tooltip(stack));
+        out.add(Component.translatable("tooltip.fieldframe_arcana.field_lens").withStyle(ChatFormatting.DARK_PURPLE));
     }
 }

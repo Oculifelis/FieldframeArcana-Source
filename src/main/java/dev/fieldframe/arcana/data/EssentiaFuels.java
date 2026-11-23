@@ -5,11 +5,9 @@ import com.google.gson.JsonObject;
 import dev.fieldframe.arcana.FieldframeArcana;
 import java.util.HashMap;
 import java.util.Map;
-import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.profiling.ProfilerFiller;
 
 /**
@@ -41,18 +39,18 @@ public final class EssentiaFuels {
         fuels = Map.copyOf(next);
     }
 
-    public static final class Listener extends SimpleJsonResourceReloadListener<JsonElement> {
+    public static final class Listener extends SimpleJsonResourceReloadListener {
         public Listener() {
-            super(ExtraCodecs.JSON, FileToIdConverter.json("fieldframe_arcana/essentia_fuels"));
+            super(new com.google.gson.Gson(), "fieldframe_arcana/essentia_fuels");
         }
 
         @Override
-        protected void apply(Map<Identifier, JsonElement> files, ResourceManager rm, ProfilerFiller profiler) {
+        protected void apply(Map<ResourceLocation, JsonElement> files, ResourceManager rm, ProfilerFiller profiler) {
             Map<String, Fuel> next = new HashMap<>();
             new java.util.TreeMap<>(files).forEach((file, json) -> {
                 try {
                     JsonObject o = json.getAsJsonObject();
-                    String aspect = Identifier.parse(o.get("aspect").getAsString()).toString();
+                    String aspect = ResourceLocation.parse(o.get("aspect").getAsString()).toString();
                     if (o.has("remove") && o.get("remove").getAsBoolean()) {
                         next.remove(aspect);
                         return;

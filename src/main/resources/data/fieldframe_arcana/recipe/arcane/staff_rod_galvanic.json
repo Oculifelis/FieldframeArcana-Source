@@ -15,9 +15,15 @@
     }
   ],
   "key": {
-    "R": "fieldframe_arcana:wand_rod_galvanic",
-    "C": "fieldframe:galvanic_cell",
-    "P": "thaumaturge:plate_thaumium"
+    "R": {
+      "item": "fieldframe_arcana:wand_rod_galvanic"
+    },
+    "C": {
+      "item": "fieldframe:galvanic_cell"
+    },
+    "P": {
+      "item": "thaumaturge:plate_thaumium"
+    }
   },
   "pattern": [
     " CP",

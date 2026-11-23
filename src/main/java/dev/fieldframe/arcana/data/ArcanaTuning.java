@@ -5,11 +5,9 @@ import com.google.gson.JsonObject;
 import dev.fieldframe.arcana.FieldframeArcana;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.profiling.ProfilerFiller;
 
 /**
@@ -96,13 +94,13 @@ public final class ArcanaTuning {
         return v != null ? v : DEFAULTS.get(key).def();
     }
 
-    public static final class Listener extends SimpleJsonResourceReloadListener<JsonElement> {
+    public static final class Listener extends SimpleJsonResourceReloadListener {
         public Listener() {
-            super(ExtraCodecs.JSON, FileToIdConverter.json("fieldframe_arcana/tuning"));
+            super(new com.google.gson.Gson(), "fieldframe_arcana/tuning");
         }
 
         @Override
-        protected void apply(Map<Identifier, JsonElement> files, ResourceManager rm, ProfilerFiller profiler) {
+        protected void apply(Map<ResourceLocation, JsonElement> files, ResourceManager rm, ProfilerFiller profiler) {
             load(files);
         }
     }
@@ -117,7 +115,7 @@ public final class ArcanaTuning {
     }
 
     /** Replaces all overrides with what {@code files} hold, the same way a datapack reload does. */
-    public static void load(Map<Identifier, JsonElement> files) {
+    public static void load(Map<ResourceLocation, JsonElement> files) {
         {
             Map<String, Double> next = new LinkedHashMap<>();
             new java.util.TreeMap<>(files).forEach((file, json) -> {

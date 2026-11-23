@@ -7,9 +7,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.transfer.access.ItemAccess;
-import net.neoforged.neoforge.transfer.energy.EnergyHandler;
-import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 /**
  * RF held in an item's {@code fieldframe_arcana:energy} component. Each powered item names a tuning group; its
@@ -65,6 +63,16 @@ public final class Charge {
         return Mth.hsvToRgb(0.55f + 0.2f * f, 0.8f, 1f);
     }
 
+    /** A message on the action bar. */
+    public static void overlay(Player player, Component message) {
+        player.displayClientMessage(message, true);
+    }
+
+    /** True when {@code stack} is the item {@code owner} wears in {@code slot}. */
+    public static boolean worn(net.minecraft.world.entity.Entity owner, ItemStack stack, net.minecraft.world.entity.EquipmentSlot slot) {
+        return owner instanceof net.minecraft.world.entity.LivingEntity l && l.getItemBySlot(slot) == stack;
+    }
+
     public static Component tooltip(ItemStack stack) {
         return Component.translatable("tooltip.fieldframe_arcana.energy", stored(stack), capacity(stack)).withStyle(net.minecraft.ChatFormatting.GRAY);
     }
@@ -84,15 +92,12 @@ public final class Charge {
                 if (s.isEmpty() || s == except || (s.getItem() instanceof Powered) != (pass == 1)) {
                     continue;
                 }
-                EnergyHandler h = ItemAccess.forStack(s).getCapability(Capabilities.Energy.ITEM);
-                if (h == null || h.getAmountAsLong() < rf) {
+                IEnergyStorage h = s.getCapability(Capabilities.EnergyStorage.ITEM);
+                if (h == null || h.getEnergyStored() < rf || h.extractEnergy(rf, true) != rf) {
                     continue;
                 }
-                try (Transaction tx = Transaction.openRoot()) {
-                    if (h.extract(rf, tx) == rf) {
-                        tx.commit();
-                        return true;
-                    }
+                if (h.extractEnergy(rf, false) == rf) {
+                    return true;
                 }
             }
         }

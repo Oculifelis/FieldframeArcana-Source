@@ -11,10 +11,18 @@
     }
   ],
   "key": {
-    "M": "fieldframe:blank_module",
-    "P": "thaumaturge:plate_thaumium",
-    "S": "thaumaturge:salis_mundus",
-    "G": "fieldframe:iron_gear"
+    "M": {
+      "item": "fieldframe:blank_module"
+    },
+    "P": {
+      "item": "thaumaturge:plate_thaumium"
+    },
+    "S": {
+      "item": "thaumaturge:salis_mundus"
+    },
+    "G": {
+      "item": "fieldframe:iron_gear"
+    }
   },
   "pattern": [
     "PSP",

@@ -11,11 +11,21 @@
     }
   ],
   "key": {
-    "M": "fieldframe:blank_module",
-    "B": "thaumaturge:plate_brass",
-    "F": "thaumaturge:filter",
-    "C": "#c:ingots/astral_silver",
-    "X": "thaumaturge:fabric"
+    "M": {
+      "item": "fieldframe:blank_module"
+    },
+    "B": {
+      "item": "thaumaturge:plate_brass"
+    },
+    "F": {
+      "item": "thaumaturge:filter"
+    },
+    "C": {
+      "tag": "c:ingots/astral_silver"
+    },
+    "X": {
+      "item": "thaumaturge:fabric"
+    }
   },
   "pattern": [
     "BFB",

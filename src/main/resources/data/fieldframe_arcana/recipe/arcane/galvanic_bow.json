@@ -15,10 +15,18 @@
     }
   ],
   "key": {
-    "T": "thaumaturge:plate_thaumium",
-    "C": "fieldframe:galvanic_cell",
-    "B": "minecraft:bow",
-    "S": "fieldframe:signal_alloy_ingot"
+    "T": {
+      "item": "thaumaturge:plate_thaumium"
+    },
+    "C": {
+      "item": "fieldframe:galvanic_cell"
+    },
+    "B": {
+      "item": "minecraft:bow"
+    },
+    "S": {
+      "item": "fieldframe:signal_alloy_ingot"
+    }
   },
   "pattern": [
     " TC",

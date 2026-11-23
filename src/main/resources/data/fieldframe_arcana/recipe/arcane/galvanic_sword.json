@@ -15,9 +15,15 @@
     }
   ],
   "key": {
-    "T": "thaumaturge:thaumium_sword",
-    "C": "fieldframe:galvanic_cell",
-    "S": "fieldframe:signal_alloy_ingot"
+    "T": {
+      "item": "thaumaturge:thaumium_sword"
+    },
+    "C": {
+      "item": "fieldframe:galvanic_cell"
+    },
+    "S": {
+      "item": "fieldframe:signal_alloy_ingot"
+    }
   },
   "pattern": [
     " T ",

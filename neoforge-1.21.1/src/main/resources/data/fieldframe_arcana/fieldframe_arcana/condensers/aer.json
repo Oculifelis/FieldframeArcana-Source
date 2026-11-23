@@ -1,6 +1,0 @@
-{
-  "aspect": "thaumaturge:aer",
-  "when": "above_y:100",
-  "rf": 6000,
-  "ticks": 200
-}

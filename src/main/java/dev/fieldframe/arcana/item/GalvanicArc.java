@@ -7,7 +7,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.phys.Vec3;
-import org.jspecify.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /** The arc the Galvanic sword and bow throw from a struck mob to the nearest hostile one beside it. */
 public final class GalvanicArc {
@@ -37,7 +37,7 @@ public final class GalvanicArc {
             Vec3 p = from.lerp(to, i / 8.0);
             level.sendParticles(ParticleTypes.ELECTRIC_SPARK, p.x, p.y, p.z, 2, 0.05, 0.05, 0.05, 0.02);
         }
-        next.hurtServer(level, level.damageSources().indirectMagic(attacker, attacker), damage);
+        next.hurt(level.damageSources().indirectMagic(attacker, attacker), damage);
         level.playSound(null, next.getX(), next.getY(), next.getZ(), SoundEvents.TRIDENT_HIT, SoundSource.PLAYERS, 0.6f, 1.8f);
     }
 

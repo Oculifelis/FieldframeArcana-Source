@@ -1,7 +1,6 @@
 package dev.fieldframe.arcana.item;
 
 import dev.fieldframe.arcana.data.ArcanaTuning;
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -10,7 +9,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Unit;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -19,10 +18,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.jspecify.annotations.Nullable;
 
 /**
  * The Galvanic Thaumium Sword: never wears out. Use switches it on or off (the {@code fieldframe_arcana:active}
@@ -60,24 +57,24 @@ public class GalvanicSwordItem extends Item implements Charge.Powered {
     }
 
     @Override
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         boolean on = !active(stack);
         if (on && !Charge.has(stack, (int) ArcanaTuning.get("galvanic_sword.rf_per_tick") * 20)) {
             if (!level.isClientSide()) {
-                player.sendOverlayMessage(Component.translatable("fieldframe_arcana.galvanic_sword.empty").withStyle(ChatFormatting.RED));
+                dev.fieldframe.arcana.item.Charge.overlay(player, Component.translatable("fieldframe_arcana.galvanic_sword.empty").withStyle(ChatFormatting.RED));
             }
-            return InteractionResult.FAIL;
+            return InteractionResultHolder.fail(stack);
         }
         if (!level.isClientSide()) {
             switchTo(stack, on, level, player);
         }
-        return InteractionResult.SUCCESS;
+        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, ServerLevel level, Entity owner, @Nullable EquipmentSlot slot) {
-        if (!active(stack)) {
+    public void inventoryTick(ItemStack stack, Level world, Entity owner, int slotId, boolean selected) {
+        if (!(world instanceof ServerLevel level) || !active(stack)) {
             return;
         }
         if (!Charge.use(stack, (int) ArcanaTuning.get("galvanic_sword.rf_per_tick"))) {
@@ -85,7 +82,7 @@ public class GalvanicSwordItem extends Item implements Charge.Powered {
             switchTo(stack, false, level, owner);
             return;
         }
-        if (slot == EquipmentSlot.MAINHAND && owner.tickCount % 3 == 0) {
+        if (Charge.worn(owner, stack, EquipmentSlot.MAINHAND) && owner.tickCount % 3 == 0) {
             Vec3 look = owner.getLookAngle();
             Vec3 side = look.cross(new Vec3(0, 1, 0)).normalize().scale(0.35);
             Vec3 p = owner.position().add(0, owner.getBbHeight() * 0.6, 0).add(look.scale(0.6)).add(side);
@@ -119,6 +116,16 @@ public class GalvanicSwordItem extends Item implements Charge.Powered {
     }
 
     @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public int getEnchantmentValue() {
+        return 14;
+    }
+
+    @Override
     public boolean isBarVisible(ItemStack stack) {
         return true;
     }
@@ -134,11 +141,11 @@ public class GalvanicSwordItem extends Item implements Charge.Powered {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext ctx, TooltipDisplay display, Consumer<Component> out, TooltipFlag flag) {
-        out.accept(Charge.tooltip(stack));
-        out.accept(active(stack)
+    public void appendHoverText(ItemStack stack, TooltipContext ctx, java.util.List<Component> out, TooltipFlag flag) {
+        out.add(Charge.tooltip(stack));
+        out.add(active(stack)
                 ? Component.translatable("tooltip.fieldframe_arcana.galvanic_sword.on").withStyle(ChatFormatting.AQUA)
                 : Component.translatable("tooltip.fieldframe_arcana.galvanic_sword.off").withStyle(ChatFormatting.GRAY));
-        out.accept(Component.translatable("tooltip.fieldframe_arcana.galvanic_sword").withStyle(ChatFormatting.DARK_PURPLE));
+        out.add(Component.translatable("tooltip.fieldframe_arcana.galvanic_sword").withStyle(ChatFormatting.DARK_PURPLE));
     }
 }

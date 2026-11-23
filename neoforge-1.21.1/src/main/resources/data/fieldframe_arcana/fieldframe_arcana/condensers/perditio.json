@@ -1,6 +1,0 @@
-{
-  "aspect": "thaumaturge:perditio",
-  "when": "night_sky",
-  "rf": 8000,
-  "ticks": 240
-}

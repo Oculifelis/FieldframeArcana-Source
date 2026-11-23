@@ -19,10 +19,18 @@
     }
   ],
   "key": {
-    "R": "thaumaturge:wand_rod_silverwood",
-    "C": "fieldframe:galvanic_cell",
-    "Q": "thaumaturge:quicksilver",
-    "S": "fieldframe:signal_alloy_ingot"
+    "R": {
+      "item": "thaumaturge:wand_rod_silverwood"
+    },
+    "C": {
+      "item": "fieldframe:galvanic_cell"
+    },
+    "Q": {
+      "item": "thaumaturge:quicksilver"
+    },
+    "S": {
+      "item": "fieldframe:signal_alloy_ingot"
+    }
   },
   "pattern": [
     " CQ",

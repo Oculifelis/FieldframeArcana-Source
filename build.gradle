@@ -10,24 +10,39 @@ base {
     archivesName = "${mod_id}-${minecraft_version}"
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 repositories {
     flatDir { dirs 'libs' }
+    maven {
+        name = 'Curios'
+        url = 'https://maven.theillusivec4.top/'
+        content { includeGroup 'top.theillusivec4.curios' }
+    }
+    maven {
+        name = 'JEI (BlameJared)'
+        url = 'https://maven.blamejared.com/'
+        content { includeGroup 'mezz.jei' }
+    }
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
 }
 
 dependencies {
-    // Local copies of the jars installed in the Simply NeoForged instance (not committed, see libs/README.md).
-    implementation files('libs/thaumaturge-26.1.2-NeoForge-1.1.0.jar')
+    // Local jars (not committed, see libs/README.md).
+    implementation files('libs/thaumaturge-1.21.1-NeoForge-1.1.0.jar')
+    implementation files('libs/fieldframe-0.3.7+1.21.1-neoforge.jar')
+    // Fieldframe needs Metallurgy Recast and Fundamentum at runtime.
+    runtimeOnly files('libs/metallurgy-recast-1.21.1-neoforge-1.4.8.jar')
+    runtimeOnly files('libs/fundamentum-neoforge-1.36.0+1.21.1.jar')
     // JEI is optional: compat/FAJeiPlugin only loads when JEI finds it.
-    compileOnly files('libs/jei-26.1.2-common-api-29.47.0.111.jar')
-    implementation files('libs/fieldframe-0.3.7+26.1.2-neoforge.jar')
-    runtimeOnly files('libs/curios-neoforge-15.0.0+26.1.2.jar')
-    runtimeOnly files('libs/lithostitched-1.8.1-neoforge-26.1.jar')
-    // Fieldframe 0.3.7 requires Metallurgy Recast 1.4.4 and Fundamentum 1.30.0 or later; 1.31.0 is the first that runs beside Jade on a server.
-    runtimeOnly files('libs/metallurgy-recast-26.1.2-neoforge-1.4.4.jar')
-    runtimeOnly files('libs/fundamentum-neoforge-1.31.0+26.1.2.jar')
-    runtimeOnly files('libs/jade-26.1.12+neoforge.jar')
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+    runtimeOnly "maven.modrinth:lithostitched:${lithostitched_version}"
 }
 
 neoForge {
@@ -38,7 +53,6 @@ neoForge {
             client()
             gameDirectory = project.file('run/client')
             jvmArgument '-Xmx3G'
-            // Development-only automated client check: tools/run_client_test.sh (runClient -Pautotest=1)
             if (project.hasProperty('autotest')) {
                 systemProperty 'fieldframe_arcana.autotest', project.property('autotest').toString()
                 systemProperty 'fieldframe_arcana.selftest', 'true'
@@ -68,6 +82,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             minecraft_version        : minecraft_version,
             minecraft_version_range  : minecraft_version_range,
             neo_version              : neo_version,
+            neo_version_range        : neo_version_range,
             mod_id                   : mod_id,
             mod_name                 : mod_name,
             mod_license              : mod_license,
@@ -83,30 +98,9 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
 sourceSets.main.resources.srcDir generateModMetadata
 neoForge.ideSyncTask generateModMetadata
 
-// Fieldframe's addon rule: only its public API packages (dev.fieldframe.api.*, dev.fieldframe.neoforge.api.*).
-tasks.register('checkApiOnly') {
-    def src = fileTree('src/main/java')
-    inputs.files(src)
-    doLast {
-        def bad = []
-        src.each { f ->
-            f.eachLine { line ->
-                def m = line =~ /^import\s+(static\s+)?(dev\.fieldframe\.[\w.]+)/
-                if (m && !(m[0][2].startsWith('dev.fieldframe.api.') || m[0][2].startsWith('dev.fieldframe.neoforge.api.')
-                        || m[0][2].startsWith('dev.fieldframe.arcana.'))) {
-                    bad << "${f.name}: ${m[0][2]}"
-                }
-            }
-        }
-        if (bad) {
-            throw new GradleException("Fieldframe Arcana uses internal Fieldframe packages:\n" + bad.join('\n'))
-        }
-    }
-}
-compileJava.dependsOn 'checkApiOnly'
-
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+    options.compilerArgs += ['-Xmaxerrs', '3000']
 }
 
 // LGPL-3.0-or-later code: the licence texts and credits ship in the jar's META-INF

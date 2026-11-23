@@ -19,12 +19,12 @@ import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
-import org.jspecify.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /** The chassis modules. Their numbers are Fieldframe tunables, so Fieldframe's tuning data and scripts change them. */
 public final class ArcanaModules {
@@ -137,7 +137,7 @@ public final class ArcanaModules {
         if (pos == null || server == null) {
             return null;
         }
-        ServerLevel level = server.getLevel(ResourceKey.create(Registries.DIMENSION, Identifier.parse(pos.dimension())));
+        ServerLevel level = server.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(pos.dimension())));
         if (level == null) {
             return null;
         }
@@ -153,7 +153,7 @@ public final class ArcanaModules {
             return null;
         }
         return site.level().registryAccess().lookupOrThrow(IAspect.REGISTRY_KEY)
-                .get(ResourceKey.create(IAspect.REGISTRY_KEY, Identifier.parse(aspectId)))
+                .get(ResourceKey.create(IAspect.REGISTRY_KEY, ResourceLocation.parse(aspectId)))
                 .map(aspect -> FieldframeForgeApi.variantOf(EssentiaCrystalAccess.create(aspect, 1)))
                 .orElse(null);
     }

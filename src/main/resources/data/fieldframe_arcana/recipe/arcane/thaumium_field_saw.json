@@ -15,10 +15,18 @@
     }
   ],
   "key": {
-    "T": "thaumaturge:ingot_thaumium",
-    "B": "thaumaturge:plate_brass",
-    "C": "fieldframe:galvanic_cell",
-    "S": "fieldframe:signal_alloy_ingot"
+    "T": {
+      "item": "thaumaturge:ingot_thaumium"
+    },
+    "B": {
+      "item": "thaumaturge:plate_brass"
+    },
+    "C": {
+      "item": "fieldframe:galvanic_cell"
+    },
+    "S": {
+      "item": "fieldframe:signal_alloy_ingot"
+    }
   },
   "pattern": [
     "TTT",

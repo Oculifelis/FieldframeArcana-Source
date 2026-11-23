@@ -11,10 +11,18 @@
     }
   ],
   "key": {
-    "G": "thaumaturge:goggles_revealing",
-    "C": "#c:ingots/silver",
-    "P": "fieldframe:galvanic_cell",
-    "B": "thaumaturge:plate_brass"
+    "G": {
+      "item": "thaumaturge:goggles_revealing"
+    },
+    "C": {
+      "tag": "c:ingots/silver"
+    },
+    "P": {
+      "item": "fieldframe:galvanic_cell"
+    },
+    "B": {
+      "item": "thaumaturge:plate_brass"
+    }
   },
   "pattern": [
     " G ",

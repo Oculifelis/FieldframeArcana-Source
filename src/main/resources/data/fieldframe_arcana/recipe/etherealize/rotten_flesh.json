@@ -3,7 +3,9 @@
   "family": "fieldframe_arcana:etherealize",
   "inputs": [
     {
-      "ingredient": "minecraft:rotten_flesh",
+      "ingredient": {
+        "item": "minecraft:rotten_flesh"
+      },
       "count": 1
     }
   ],

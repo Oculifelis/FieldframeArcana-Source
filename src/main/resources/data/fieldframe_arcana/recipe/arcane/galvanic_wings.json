@@ -15,10 +15,18 @@
     }
   ],
   "key": {
-    "F": "thaumaturge:fabric",
-    "C": "fieldframe:galvanic_cell",
-    "E": "minecraft:elytra",
-    "T": "thaumaturge:plate_thaumium"
+    "F": {
+      "item": "thaumaturge:fabric"
+    },
+    "C": {
+      "item": "fieldframe:galvanic_cell"
+    },
+    "E": {
+      "item": "minecraft:elytra"
+    },
+    "T": {
+      "item": "thaumaturge:plate_thaumium"
+    }
   },
   "pattern": [
     "FCF",

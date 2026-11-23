@@ -27,11 +27,21 @@
     }
   ],
   "key": {
-    "M": "fieldframe:blank_module",
-    "T": "thaumaturge:plate_thaumium",
-    "X": "thaumaturge:mirrored_glass",
-    "C": "#c:ingots/astral_silver",
-    "Q": "thaumaturge:quicksilver"
+    "M": {
+      "item": "fieldframe:blank_module"
+    },
+    "T": {
+      "item": "thaumaturge:plate_thaumium"
+    },
+    "X": {
+      "item": "thaumaturge:mirrored_glass"
+    },
+    "C": {
+      "tag": "c:ingots/astral_silver"
+    },
+    "Q": {
+      "item": "thaumaturge:quicksilver"
+    }
   },
   "pattern": [
     "TXT",

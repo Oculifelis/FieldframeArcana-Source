@@ -18,14 +18,14 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
-import mezz.jei.api.recipe.types.IRecipeType;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
 
@@ -43,14 +43,14 @@ public final class FAJeiPlugin implements IModPlugin {
     record Condense(ItemStack result, Condensers.Entry entry) {
     }
 
-    static final IRecipeType<Fuel> DYNAMO = IRecipeType.create(FieldframeArcana.id("essentia_dynamo"), Fuel.class);
-    static final IRecipeType<Condense> CONDENSER = IRecipeType.create(FieldframeArcana.id("primal_condenser"), Condense.class);
+    static final RecipeType<Fuel> DYNAMO = new RecipeType<>(FieldframeArcana.id("essentia_dynamo"), Fuel.class);
+    static final RecipeType<Condense> CONDENSER = new RecipeType<>(FieldframeArcana.id("primal_condenser"), Condense.class);
 
     private static final List<FfId> INFO = List.of(ArcanaModules.AURA_TAP, ArcanaModules.VIS_CHARGER, ArcanaModules.FLUX_SCRUBBER,
             ArcanaModules.NODE_CRADLE);
 
     @Override
-    public Identifier getPluginUid() {
+    public ResourceLocation getPluginUid() {
         return FieldframeArcana.id("jei");
     }
 
@@ -62,8 +62,8 @@ public final class FAJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addCraftingStation(DYNAMO, FieldframeForgeApi.moduleItem(ArcanaModules.ESSENTIA_DYNAMO));
-        registration.addCraftingStation(CONDENSER, FieldframeForgeApi.moduleItem(ArcanaModules.PRIMAL_CONDENSER));
+        registration.addRecipeCatalyst(new ItemStack(FieldframeForgeApi.moduleItem(ArcanaModules.ESSENTIA_DYNAMO)), DYNAMO);
+        registration.addRecipeCatalyst(new ItemStack(FieldframeForgeApi.moduleItem(ArcanaModules.PRIMAL_CONDENSER)), CONDENSER);
     }
 
     @Override
@@ -74,11 +74,11 @@ public final class FAJeiPlugin implements IModPlugin {
         if (level != null) {
             var aspects = level.registryAccess().lookupOrThrow(IAspect.REGISTRY_KEY);
             new TreeMap<>(EssentiaFuels.all()).forEach((aspect, fuel) -> aspects.get(ResourceKey.create(IAspect.REGISTRY_KEY,
-                    Identifier.parse(aspect))).ifPresent(h -> fuels.add(new Fuel(EssentiaCrystalAccess.create(h, 1), fuel))));
+                    ResourceLocation.parse(aspect))).ifPresent(h -> fuels.add(new Fuel(EssentiaCrystalAccess.create(h, 1), fuel))));
             for (Condensers.Entry entry : Condensers.all()) {
                 ItemStack result = entry.result() != null
-                        ? BuiltInRegistries.ITEM.getOptional(Identifier.parse(entry.result())).map(ItemStack::new).orElse(ItemStack.EMPTY)
-                        : aspects.get(ResourceKey.create(IAspect.REGISTRY_KEY, Identifier.parse(entry.aspect())))
+                        ? BuiltInRegistries.ITEM.getOptional(ResourceLocation.parse(entry.result())).map(ItemStack::new).orElse(ItemStack.EMPTY)
+                        : aspects.get(ResourceKey.create(IAspect.REGISTRY_KEY, ResourceLocation.parse(entry.aspect())))
                                 .map(h -> EssentiaCrystalAccess.create(h, 1)).orElse(ItemStack.EMPTY);
                 if (!result.isEmpty()) {
                     condensers.add(new Condense(result, entry));
@@ -110,7 +110,7 @@ public final class FAJeiPlugin implements IModPlugin {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, Fuel recipe, IFocusGroup focuses) {
-            builder.addInputSlot(4, 5).setStandardSlotBackground().add(recipe.crystal());
+            builder.addInputSlot(4, 5).setStandardSlotBackground().addItemStack(recipe.crystal());
         }
 
         @Override
@@ -130,7 +130,7 @@ public final class FAJeiPlugin implements IModPlugin {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, Condense recipe, IFocusGroup focuses) {
-            builder.addOutputSlot(118, 5).setOutputSlotBackground().add(recipe.result());
+            builder.addOutputSlot(118, 5).setOutputSlotBackground().addItemStack(recipe.result());
         }
 
         @Override

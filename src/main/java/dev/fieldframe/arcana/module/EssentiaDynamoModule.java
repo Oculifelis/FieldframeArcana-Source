@@ -13,7 +13,6 @@ import dev.fieldframe.api.status.Status;
 import dev.fieldframe.api.status.Statuses;
 import dev.fieldframe.arcana.data.EssentiaFuels;
 import net.minecraft.core.Holder;
-import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 /**
  * Burns essentia from the block in front of its face (a jar, or anything with Thaumaturge's essentia storage or
@@ -75,11 +74,8 @@ final class EssentiaDynamoModule implements ModuleBehavior {
                 }
             }
             if (best != null) {
-                try (Transaction tx = Transaction.openRoot()) {
-                    if (storage.extract(best, 1, tx) == 1) {
-                        tx.commit();
-                        taken = best;
-                    }
+                if (storage.extract(best, 1, false) == 1) {
+                    taken = best;
                 }
             }
         } else {

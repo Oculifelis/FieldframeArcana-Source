@@ -15,11 +15,21 @@
     }
   ],
   "key": {
-    "M": "fieldframe:blank_module",
-    "B": "thaumaturge:plate_brass",
-    "V": "thaumaturge:vis_resonator",
-    "C": "#c:ingots/silver",
-    "A": "thaumaturge:alumentum"
+    "M": {
+      "item": "fieldframe:blank_module"
+    },
+    "B": {
+      "item": "thaumaturge:plate_brass"
+    },
+    "V": {
+      "item": "thaumaturge:vis_resonator"
+    },
+    "C": {
+      "tag": "c:ingots/silver"
+    },
+    "A": {
+      "item": "thaumaturge:alumentum"
+    }
   },
   "pattern": [
     "BVB",

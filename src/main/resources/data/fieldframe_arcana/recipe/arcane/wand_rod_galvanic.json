@@ -15,9 +15,15 @@
     }
   ],
   "key": {
-    "R": "thaumaturge:wand_rod_greatwood",
-    "C": "#c:ingots/mithril",
-    "S": "fieldframe:signal_alloy_ingot"
+    "R": {
+      "item": "thaumaturge:wand_rod_greatwood"
+    },
+    "C": {
+      "tag": "c:ingots/mithril"
+    },
+    "S": {
+      "item": "fieldframe:signal_alloy_ingot"
+    }
   },
   "pattern": [
     " CS",

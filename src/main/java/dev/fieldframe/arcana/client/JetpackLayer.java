@@ -11,30 +11,30 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.model.player.PlayerModel;
-import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.state.AvatarRenderState;
-import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * The Galvanic Jetpack on the wearer's back: a frame, two tanks, two nozzles and a glowing coil between the tanks
- * ({@code textures/models/galvanic_jetpack.png}, 32x32), posed with the body. The straps are the item's humanoid
- * equipment layer.
+ * ({@code textures/models/galvanic_jetpack.png}, 32x32), posed with the body. The straps are the item's armour
+ * layer.
  */
-public final class JetpackLayer extends RenderLayer<AvatarRenderState, PlayerModel> {
+public final class JetpackLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     public static final ModelLayerLocation LAYER = new ModelLayerLocation(FieldframeArcana.id("galvanic_jetpack"), "main");
-    private static final Identifier TEXTURE = FieldframeArcana.id("textures/models/galvanic_jetpack.png");
-    private static final Identifier ARMORED_TEXTURE = FieldframeArcana.id("textures/models/armored_galvanic_jetpack.png");
+    private static final ResourceLocation TEXTURE = FieldframeArcana.id("textures/models/galvanic_jetpack.png");
+    private static final ResourceLocation ARMORED_TEXTURE = FieldframeArcana.id("textures/models/armored_galvanic_jetpack.png");
     private static final int FULL_BRIGHT = 0xF000F0;
     private final ModelPart pack;
     private final ModelPart coil;
 
-    public JetpackLayer(RenderLayerParent<AvatarRenderState, PlayerModel> parent, EntityModelSet models) {
+    public JetpackLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> parent, EntityModelSet models) {
         super(parent);
         ModelPart root = models.bakeLayer(LAYER);
         pack = root.getChild("pack");
@@ -56,16 +56,16 @@ public final class JetpackLayer extends RenderLayer<AvatarRenderState, PlayerMod
     }
 
     @Override
-    public void submit(PoseStack pose, SubmitNodeCollector collector, int light, AvatarRenderState state, float yRot, float xRot) {
-        if (state.isInvisible || !(state.chestEquipment.getItem() instanceof GalvanicJetpackItem item)) {
+    public void render(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer player, float limbSwing, float limbSwingAmount,
+            float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (player.isInvisible() || !(player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof GalvanicJetpackItem item)) {
             return;
         }
-        Identifier texture = item.armored() ? ARMORED_TEXTURE : TEXTURE;
+        ResourceLocation texture = item.armored() ? ARMORED_TEXTURE : TEXTURE;
         pose.pushPose();
         getParentModel().body.translateAndRotate(pose);
-        RenderType type = RenderTypes.armorCutoutNoCull(texture);
-        collector.submitModelPart(pack, pose, type, light, OverlayTexture.NO_OVERLAY, null);
-        collector.submitModelPart(coil, pose, RenderTypes.entityTranslucentEmissive(texture), FULL_BRIGHT, OverlayTexture.NO_OVERLAY, null);
+        pack.render(pose, buffers.getBuffer(RenderType.armorCutoutNoCull(texture)), light, OverlayTexture.NO_OVERLAY);
+        coil.render(pose, buffers.getBuffer(RenderType.entityTranslucentEmissive(texture)), FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
         pose.popPose();
     }
 }

@@ -1,18 +1,16 @@
 package dev.fieldframe.arcana.item;
 
 import dev.fieldframe.arcana.data.ArcanaTuning;
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -37,18 +35,18 @@ public abstract class FieldToolItem extends Item implements Charge.Powered {
     }
 
     @Override
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (!player.isShiftKeyDown()) {
-            return InteractionResult.PASS;
+            return InteractionResultHolder.pass(player.getItemInHand(hand));
         }
         ItemStack stack = player.getItemInHand(hand);
         int next = (mode(stack) + 1) % modes().length;
         stack.set(ArcanaComponents.MODE.get(), next);
         if (!level.isClientSide()) {
-            player.sendOverlayMessage(Component.translatable("fieldframe_arcana.mode_set",
+            dev.fieldframe.arcana.item.Charge.overlay(player, Component.translatable("fieldframe_arcana.mode_set",
                     Component.translatable("mode.fieldframe_arcana." + modes()[next])).withStyle(ChatFormatting.AQUA));
         }
-        return InteractionResult.SUCCESS;
+        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
     }
 
     @Override
@@ -57,6 +55,16 @@ public abstract class FieldToolItem extends Item implements Charge.Powered {
             Charge.use(stack, Math.min(Charge.stored(stack), rfPerBlock()));
         }
         return true;
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public int getEnchantmentValue() {
+        return 14;
     }
 
     @Override
@@ -75,11 +83,11 @@ public abstract class FieldToolItem extends Item implements Charge.Powered {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext ctx, TooltipDisplay display, Consumer<Component> out, TooltipFlag flag) {
-        out.accept(Charge.tooltip(stack));
-        out.accept(Component.translatable("tooltip.fieldframe_arcana.mode", Component.translatable("mode.fieldframe_arcana." + modes()[mode(stack)]))
+    public void appendHoverText(ItemStack stack, TooltipContext ctx, java.util.List<Component> out, TooltipFlag flag) {
+        out.add(Charge.tooltip(stack));
+        out.add(Component.translatable("tooltip.fieldframe_arcana.mode", Component.translatable("mode.fieldframe_arcana." + modes()[mode(stack)]))
                 .withStyle(ChatFormatting.AQUA));
-        out.accept(Component.translatable("tooltip.fieldframe_arcana." + tuningGroup()).withStyle(ChatFormatting.DARK_PURPLE));
+        out.add(Component.translatable("tooltip.fieldframe_arcana." + tuningGroup()).withStyle(ChatFormatting.DARK_PURPLE));
     }
 
     /** RF pickaxe and shovel: normal, 3x3 and refining (smelts drops, paid in RF and the chunk's vis). */

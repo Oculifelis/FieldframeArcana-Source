@@ -3,7 +3,9 @@
   "family": "fieldframe_arcana:etherealize",
   "inputs": [
     {
-      "ingredient": "minecraft:raw_iron",
+      "ingredient": {
+        "item": "minecraft:raw_iron"
+      },
       "count": 1
     }
   ],

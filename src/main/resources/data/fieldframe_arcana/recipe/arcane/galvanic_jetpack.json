@@ -15,10 +15,18 @@
     }
   ],
   "key": {
-    "T": "thaumaturge:plate_thaumium",
-    "C": "fieldframe:galvanic_cell",
-    "P": "fieldframe:copper_plate",
-    "A": "thaumaturge:alumentum"
+    "T": {
+      "item": "thaumaturge:plate_thaumium"
+    },
+    "C": {
+      "item": "fieldframe:galvanic_cell"
+    },
+    "P": {
+      "item": "fieldframe:copper_plate"
+    },
+    "A": {
+      "item": "thaumaturge:alumentum"
+    }
   },
   "pattern": [
     "TCT",
