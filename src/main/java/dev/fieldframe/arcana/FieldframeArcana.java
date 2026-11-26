@@ -4,7 +4,7 @@ import dev.fieldframe.arcana.data.ArcanaDataSync;
 import dev.fieldframe.arcana.data.ArcanaTuning;
 import dev.fieldframe.arcana.data.Condensers;
 import dev.fieldframe.arcana.data.EssentiaFuels;
-import dev.fieldframe.arcana.item.ArcFocus;
+import dev.fieldframe.arcana.spell.ArcPart;
 import dev.fieldframe.arcana.item.ArcanaArmorEvents;
 import dev.fieldframe.arcana.item.ArcanaToolEvents;
 import dev.fieldframe.arcana.item.GalvanicBowItem;
@@ -32,7 +32,7 @@ public final class FieldframeArcana {
         ArcanaToolEvents.register();
         ArcanaArmorEvents.register();
         GalvanicBowItem.register();
-        ArcFocus.register();
+        ArcPart.register(bus);
         SelfTest.register();
         ArcanaDataSync.register(bus);
         dev.fieldframe.arcana.item.JetpackInput.register(bus);

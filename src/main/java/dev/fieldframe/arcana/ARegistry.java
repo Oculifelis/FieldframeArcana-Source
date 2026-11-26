@@ -4,7 +4,6 @@ import com.leclowndu93150.thaumaturge.api.wands.WandRod;
 import com.leclowndu93150.thaumaturge.content.wands.ItemWandRod;
 import com.leclowndu93150.thaumaturge.registry.TTDataComponents;
 import dev.fieldframe.api.id.FfId;
-import dev.fieldframe.arcana.item.ArcFocus;
 import dev.fieldframe.arcana.item.ArcanaComponents;
 import dev.fieldframe.arcana.item.Charge;
 import dev.fieldframe.arcana.item.FieldLensItem;
@@ -117,8 +116,6 @@ public final class ARegistry {
             props.stacksTo(1).rarity(Rarity.RARE).attributes(weapon(7f, -2.4f))));
     public static final DeferredItem<GalvanicBowItem> GALVANIC_BOW = ITEMS.registerItem("galvanic_bow", props -> new GalvanicBowItem(
             props.stacksTo(1).rarity(Rarity.RARE)));
-    public static final DeferredItem<ArcFocus.Item> ARC_FOCUS = ITEMS.registerItem("arc_focus",
-            props -> new ArcFocus.Item(props.stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     public static final List<DeferredItem<? extends Item>> POWERED = List.of(FIELD_LENS, GALVANIC_BOOTS, GALVANIC_WINGS, GALVANIC_JETPACK, ARMORED_GALVANIC_JETPACK, FIELD_DRILL, FIELD_SAW,
             GALVANIC_SWORD, GALVANIC_BOW);
@@ -134,7 +131,6 @@ public final class ARegistry {
                 out.accept(STAFF_ROD_GALVANIC.get());
                 out.accept(WAND_ROD_VOLTAIC.get());
                 out.accept(STAFF_ROD_VOLTAIC.get());
-                out.accept(ARC_FOCUS.get());
                 for (DeferredItem<? extends Item> item : POWERED) {
                     out.accept(item.get());
                     ItemStack full = new ItemStack(item.get());

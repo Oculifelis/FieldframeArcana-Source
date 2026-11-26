@@ -4,9 +4,7 @@
   "package": "dev.fieldframe.arcana.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
-  "client": [
-    "client.WindowNoFocusMixin"
-  ],
+  "client": [],
   "server": [],
   "injectors": {
     "defaultRequire": 1

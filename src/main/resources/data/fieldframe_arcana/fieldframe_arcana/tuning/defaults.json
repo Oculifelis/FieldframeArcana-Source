@@ -42,7 +42,7 @@
     "thrust": 0.04,
     "max_speed": 1.2
   },
-  "arc_focus": {
+  "arc_part": {
     "vis_share": 0.5,
     "rf_per_vis": 300
   },

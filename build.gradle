@@ -34,7 +34,7 @@ repositories {
 dependencies {
     // Local jars (not committed, see libs/README.md).
     implementation files('libs/thaumaturge-1.21.1-NeoForge-1.1.0.jar')
-    implementation files('libs/fieldframe-0.3.7+1.21.1-neoforge.jar')
+    implementation files('libs/fieldframe-0.3.8+1.21.1-neoforge.jar')
     // Fieldframe needs Metallurgy Recast and Fundamentum at runtime.
     runtimeOnly files('libs/metallurgy-recast-1.21.1-neoforge-1.4.8.jar')
     runtimeOnly files('libs/fundamentum-neoforge-1.36.0+1.21.1.jar')
