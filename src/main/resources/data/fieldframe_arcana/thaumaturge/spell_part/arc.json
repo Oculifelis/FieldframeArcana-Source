@@ -1,0 +1,13 @@
+{
+  "aspect": "thaumaturge:potentia",
+  "behavior": {
+    "type": "fieldframe_arcana:arc"
+  },
+  "color": 8753326,
+  "complexity": 2,
+  "icon": "fieldframe_arcana:textures/foci/arc.png",
+  "max_per_spell": 1,
+  "research": {
+    "entry": "fieldframe_arcana:arc"
+  }
+}

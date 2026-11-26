@@ -1,6 +1,6 @@
 {
   "category": "fieldframe_arcana:fieldframe_arcana",
-  "name": "research.fieldframe_arcana.arc_focus.title",
+  "name": "research.fieldframe_arcana.arc.title",
   "parents": [
     "fieldframe_arcana:galvanic_rod",
     "thaumaturge:focus_bolt"
@@ -8,11 +8,11 @@
   "column": 4,
   "row": 6,
   "icons": [
-    "fieldframe_arcana:arc_focus"
+    "focus:fieldframe_arcana:arc"
   ],
   "stages": [
     {
-      "text": "research.fieldframe_arcana.arc_focus.stage_0",
+      "text": "research.fieldframe_arcana.arc.stage_0",
       "required_knowledge": [
         {
           "type": "theory",
@@ -27,10 +27,7 @@
       ]
     },
     {
-      "text": "research.fieldframe_arcana.arc_focus.stage_1",
-      "recipes": [
-        "fieldframe_arcana:arcane/arc_focus"
-      ]
+      "text": "research.fieldframe_arcana.arc.stage_1"
     }
   ],
   "note_aspects": [

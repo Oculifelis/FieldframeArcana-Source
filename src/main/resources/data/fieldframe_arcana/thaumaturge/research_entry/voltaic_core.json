@@ -3,7 +3,7 @@
   "name": "research.fieldframe_arcana.voltaic_core.title",
   "parents": [
     "fieldframe_arcana:galvanic_rod",
-    "fieldframe_arcana:arc_focus",
+    "fieldframe_arcana:arc",
     "thaumaturge:rod_silverwood"
   ],
   "column": 4,

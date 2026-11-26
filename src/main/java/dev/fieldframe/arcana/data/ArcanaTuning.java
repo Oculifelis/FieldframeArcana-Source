@@ -48,7 +48,7 @@ public final class ArcanaTuning {
         DEFAULTS.put("galvanic_wings.rf_per_tick", new Spec(40, 0, 100_000));
         DEFAULTS.put("galvanic_wings.thrust", new Spec(0.04, 0, 1));
         DEFAULTS.put("galvanic_wings.max_speed", new Spec(1.2, 0, 10));
-        DEFAULTS.put("arc_focus.vis_share", new Spec(0.5, 0, 1));
+        DEFAULTS.put("arc_part.vis_share", new Spec(0.5, 0, 1));
         DEFAULTS.put("voltaic_core.rf_share", new Spec(0.5, 0, 1));
         DEFAULTS.put("voltaic_core.rf_per_vis", new Spec(250, 0, 1_000_000));
         DEFAULTS.put("voltaic_core.buffer", new Spec(50_000, 0, 100_000_000));
@@ -78,7 +78,7 @@ public final class ArcanaTuning {
         DEFAULTS.put("galvanic_jetpack.hover_fall", new Spec(-0.12, -4, 0));
         DEFAULTS.put("galvanic_jetpack.air_control", new Spec(0.02, 0, 1));
         powered("armored_galvanic_jetpack", 800_000, 3_000);
-        DEFAULTS.put("arc_focus.rf_per_vis", new Spec(300, 0, 1_000_000));
+        DEFAULTS.put("arc_part.rf_per_vis", new Spec(300, 0, 1_000_000));
     }
 
     private static void powered(String group, double capacity, double io) {

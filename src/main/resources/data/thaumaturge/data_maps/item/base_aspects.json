@@ -1,0 +1,301 @@
+{
+  "replace": false,
+  "values": {
+    "fieldframe_arcana:aura_tap": [
+      {
+        "aspect": "thaumaturge:auram",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:machina",
+        "amount": 8
+      },
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 8
+      }
+    ],
+    "fieldframe_arcana:essentia_dynamo": [
+      {
+        "aspect": "thaumaturge:machina",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 12
+      },
+      {
+        "aspect": "thaumaturge:ignis",
+        "amount": 5
+      }
+    ],
+    "fieldframe_arcana:etheric_crusher": [
+      {
+        "aspect": "thaumaturge:machina",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:perditio",
+        "amount": 8
+      },
+      {
+        "aspect": "thaumaturge:auram",
+        "amount": 5
+      }
+    ],
+    "fieldframe_arcana:flux_scrubber": [
+      {
+        "aspect": "thaumaturge:machina",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:vitium",
+        "amount": 8
+      },
+      {
+        "aspect": "thaumaturge:ordo",
+        "amount": 6
+      }
+    ],
+    "fieldframe_arcana:node_cradle": [
+      {
+        "aspect": "thaumaturge:auram",
+        "amount": 12
+      },
+      {
+        "aspect": "thaumaturge:machina",
+        "amount": 6
+      },
+      {
+        "aspect": "thaumaturge:praecantatio",
+        "amount": 6
+      }
+    ],
+    "fieldframe_arcana:primal_condenser": [
+      {
+        "aspect": "thaumaturge:machina",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:praecantatio",
+        "amount": 8
+      },
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 6
+      }
+    ],
+    "fieldframe_arcana:vis_charger": [
+      {
+        "aspect": "thaumaturge:machina",
+        "amount": 8
+      },
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:praecantatio",
+        "amount": 8
+      }
+    ],
+    "fieldframe_arcana:field_lens": [
+      {
+        "aspect": "thaumaturge:vitreus",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:sensus",
+        "amount": 8
+      },
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 5
+      }
+    ],
+    "fieldframe_arcana:galvanic_boots": [
+      {
+        "aspect": "thaumaturge:motus",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 8
+      },
+      {
+        "aspect": "thaumaturge:praemunio",
+        "amount": 5
+      },
+      {
+        "aspect": "thaumaturge:metallum",
+        "amount": 6
+      }
+    ],
+    "fieldframe_arcana:galvanic_bow": [
+      {
+        "aspect": "thaumaturge:aversio",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 8
+      },
+      {
+        "aspect": "thaumaturge:volatus",
+        "amount": 5
+      }
+    ],
+    "fieldframe_arcana:galvanic_sword": [
+      {
+        "aspect": "thaumaturge:aversio",
+        "amount": 12
+      },
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 8
+      },
+      {
+        "aspect": "thaumaturge:metallum",
+        "amount": 8
+      }
+    ],
+    "fieldframe_arcana:galvanic_jetpack": [
+      {
+        "aspect": "thaumaturge:volatus",
+        "amount": 12
+      },
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:machina",
+        "amount": 6
+      }
+    ],
+    "fieldframe_arcana:armored_galvanic_jetpack": [
+      {
+        "aspect": "thaumaturge:volatus",
+        "amount": 12
+      },
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:praemunio",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:metallum",
+        "amount": 8
+      }
+    ],
+    "fieldframe_arcana:galvanic_wings": [
+      {
+        "aspect": "thaumaturge:volatus",
+        "amount": 15
+      },
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:aer",
+        "amount": 6
+      }
+    ],
+    "fieldframe_arcana:staff_rod_galvanic": [
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 12
+      },
+      {
+        "aspect": "thaumaturge:praecantatio",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:metallum",
+        "amount": 6
+      }
+    ],
+    "fieldframe_arcana:staff_rod_voltaic": [
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 15
+      },
+      {
+        "aspect": "thaumaturge:praecantatio",
+        "amount": 12
+      },
+      {
+        "aspect": "thaumaturge:machina",
+        "amount": 6
+      }
+    ],
+    "fieldframe_arcana:wand_rod_galvanic": [
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 8
+      },
+      {
+        "aspect": "thaumaturge:praecantatio",
+        "amount": 6
+      },
+      {
+        "aspect": "thaumaturge:metallum",
+        "amount": 4
+      }
+    ],
+    "fieldframe_arcana:wand_rod_voltaic": [
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 10
+      },
+      {
+        "aspect": "thaumaturge:praecantatio",
+        "amount": 8
+      },
+      {
+        "aspect": "thaumaturge:machina",
+        "amount": 4
+      }
+    ],
+    "fieldframe_arcana:thaumium_field_drill": [
+      {
+        "aspect": "thaumaturge:instrumentum",
+        "amount": 12
+      },
+      {
+        "aspect": "thaumaturge:perditio",
+        "amount": 6
+      },
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 8
+      },
+      {
+        "aspect": "thaumaturge:metallum",
+        "amount": 8
+      }
+    ],
+    "fieldframe_arcana:thaumium_field_saw": [
+      {
+        "aspect": "thaumaturge:instrumentum",
+        "amount": 12
+      },
+      {
+        "aspect": "thaumaturge:herba",
+        "amount": 6
+      },
+      {
+        "aspect": "thaumaturge:potentia",
+        "amount": 8
+      },
+      {
+        "aspect": "thaumaturge:metallum",
+        "amount": 8
+      }
+    ]
+  }
+}

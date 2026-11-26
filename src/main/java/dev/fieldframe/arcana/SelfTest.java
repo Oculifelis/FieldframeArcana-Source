@@ -75,6 +75,7 @@ final class SelfTest {
             bow(level);
             jetpack(level);
             data(level);
+            arc(level);
         } catch (Exception ex) {
             FieldframeArcana.LOG.error("SELFTEST FAIL crashed", ex);
         }
@@ -201,6 +202,41 @@ final class SelfTest {
             check("sword_no_wear", !sword.isDamageableItem(), "damageable " + sword.isDamageableItem());
         } finally {
             spawned.forEach(Zombie::discard);
+        }
+    }
+
+    /** The Arc part loads from data as a modifier; a spell holding it pays half its vis in RF, full vis without a cell. */
+    private static void arc(ServerLevel level) {
+        var part = com.leclowndu93150.thaumaturge.api.spell.Spells.part(level.registryAccess(), dev.fieldframe.arcana.spell.ArcPart.KEY);
+        check("arc_part_loaded", part.isPresent() && part.get().kind() == com.leclowndu93150.thaumaturge.api.spell.part.SpellPartKind.MODIFIER
+                && part.get().behavior() instanceof dev.fieldframe.arcana.spell.ArcPart, "part " + part.map(p -> p.kind() + " " + p.behavior()).orElse("missing"));
+        var origin = com.leclowndu93150.thaumaturge.api.spell.SpellNode.of(com.leclowndu93150.thaumaturge.api.spell.Spell.ORIGIN);
+        var withArc = new com.leclowndu93150.thaumaturge.api.spell.Spell(com.leclowndu93150.thaumaturge.api.spell.CastStyle.INSTANT,
+                origin.then(com.leclowndu93150.thaumaturge.api.spell.SpellNode.of(dev.fieldframe.arcana.spell.ArcPart.KEY)));
+        var plain = new com.leclowndu93150.thaumaturge.api.spell.Spell(com.leclowndu93150.thaumaturge.api.spell.CastStyle.INSTANT, origin);
+        FakePlayer p = player(level, 200);
+        ItemStack focus = new ItemStack(Items.STICK);
+        ItemStack cell = new ItemStack(ARegistry.FIELD_DRILL.get()); // max_io 2000 covers the 1500 RF pull
+        Charge.fill(cell);
+        int rf = (int) Math.ceil(10 * ArcanaTuning.get("arc_part.vis_share") * ArcanaTuning.get("arc_part.rf_per_vis"));
+        try {
+            p.getInventory().clearContent();
+            p.getInventory().add(cell);
+            int before = Charge.stored(p.getInventory().getItem(0));
+            var paid = new com.leclowndu93150.thaumaturge.api.spell.event.SpellCastEvent.Pre(p, focus, withArc, 1f, 10f);
+            NeoForge.EVENT_BUS.post(paid);
+            int drained = before - Charge.stored(p.getInventory().getItem(0));
+            check("arc_pays_half_in_rf", paid.visCost() == 5f && drained == rf, "vis " + paid.visCost() + ", drained " + drained + " (want 5.0, " + rf + ")");
+            var other = new com.leclowndu93150.thaumaturge.api.spell.event.SpellCastEvent.Pre(p, focus, plain, 1f, 10f);
+            NeoForge.EVENT_BUS.post(other);
+            check("arc_absent_no_change", other.visCost() == 10f && Charge.stored(p.getInventory().getItem(0)) == before - rf,
+                    "vis " + other.visCost() + ", stored " + Charge.stored(p.getInventory().getItem(0)));
+            p.getInventory().clearContent();
+            var dry = new com.leclowndu93150.thaumaturge.api.spell.event.SpellCastEvent.Pre(p, focus, withArc, 1f, 10f);
+            NeoForge.EVENT_BUS.post(dry);
+            check("arc_no_cell_full_vis", dry.visCost() == 10f, "vis " + dry.visCost());
+        } finally {
+            p.getInventory().clearContent();
         }
     }
 
